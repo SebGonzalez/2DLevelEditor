@@ -30,8 +30,10 @@ public class GestionTexture {
 	public void dessinerTile(Graphics g, int width, int height) {
 		
 		int hauteur = (height - (2*(height/listeTileTexture.size()) ))/listeTileTexture.size();
+		g.drawLine(width-hauteur*2, 0, width-hauteur*2, height);
 		for(int i=0; i<listeTileTexture.size(); i++) {
-			g.drawImage(listeTileTexture.get(i), width-(hauteur+30), ((hauteur+20)*i) + 10, hauteur, hauteur,  null);
+			g.drawImage(listeTileTexture.get(i), width-(hauteur+30), ((hauteur+20)*i) + 50, hauteur, hauteur,  null);
+			
 		}
 	}
 }
