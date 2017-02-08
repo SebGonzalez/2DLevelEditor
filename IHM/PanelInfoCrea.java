@@ -1,4 +1,5 @@
 package IHM;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -69,8 +70,9 @@ public void actionPerformed(ActionEvent e) {
            Frame.p.ajouterNiveau(n);
            Frame.p.getListeNiveau().get(0).getGestionTexture().decouperImage("src/tileset1.bmp", 8);
            
-           	frame.setExtendedState(frame.MAXIMIZED_BOTH);
-   			//frame.setSize(1000,900);
+           	//frame.setExtendedState(frame.MAXIMIZED_BOTH);
+           Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+           	frame.setSize((int)dimension.getWidth(), (int)dimension.getHeight());
    			frame.setLocationRelativeTo(null);
    			frame.getContentPane().removeAll();
    			frame.setContentPane(new PanelCreation());
