@@ -1,5 +1,6 @@
 package gestionTexture;
 
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -19,14 +20,18 @@ public class GestionTexture {
 		BufferedImage img = (BufferedImage) BMPImage.readBMP(f);
 		
 		for(int i=0; i<nb; i++) {
-			Image newImg = img.getSubimage(i*(img.getWidth(null)/nb), 0, (i+1)*(img.getWidth(null)/nb), img.getHeight(null));
+			System.out.println(" x : " + i*(img.getWidth()/nb) + " ,  0 " +  " y : " + (img.getWidth()/nb) + " , " + img.getHeight());
+			Image newImg = img.getSubimage(i*(img.getWidth()/nb), 0, (img.getWidth()/nb), img.getHeight());
+			System.out.println(" oui : " + img.getWidth() + " non : " + img.getHeight());
 			listeTileTexture.add(newImg);
 		}
 	}
 	
-	public void dessinerTile(Graphics g) {
+	public void dessinerTile(Graphics g, int width, int height) {
+		
+		int hauteur = (height - (2*(height/listeTileTexture.size()) ))/listeTileTexture.size();
 		for(int i=0; i<listeTileTexture.size(); i++) {
-			g.drawImage(listeTileTexture.get(i), 950, (listeTileTexture.get(i).getHeight(null)+10)*i, null);
+			g.drawImage(listeTileTexture.get(i), width-(hauteur+30), ((hauteur+20)*i) + 10, hauteur, hauteur,  null);
 		}
 	}
 }

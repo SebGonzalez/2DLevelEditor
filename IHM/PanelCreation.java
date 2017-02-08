@@ -14,8 +14,6 @@ public class PanelCreation extends JPanel implements ActionListener {
 	private JButton test;
 	
 	public PanelCreation() {
-		this.setSize(1000,900);
-		
 		
 		test = new JButton("test");
 		test.setSize(100,50);
@@ -24,7 +22,7 @@ public class PanelCreation extends JPanel implements ActionListener {
 	}
 
 	public void paintComponent(Graphics g) {
-		Frame.p.getListeNiveau().get(0).getGestionTexture().dessinerTile(g); 
+		Frame.p.getListeNiveau().get(0).getGestionTexture().dessinerTile(g, this.getWidth(), this.getHeight()); 
 		
         //repaint();
     }
