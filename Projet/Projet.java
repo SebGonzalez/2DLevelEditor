@@ -19,4 +19,8 @@ public class Projet {
 		return listeNiveau;
 	}
 	
+	public void ajouterNiveau(Niveau n){
+		listeNiveau.add(n);
+	}
+	
 }
