@@ -19,8 +19,7 @@ public class Frame extends JFrame {
 	public static void main(String[] args) {
 		Frame f = new Frame();
 		 p = new Projet();
-		p.creerNiveau();
-		p.getListeNiveau().get(0).getGestionTexture().decouperImage("src/tileset1.bmp", 8);
+		
 
 	}
 

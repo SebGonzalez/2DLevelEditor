@@ -42,11 +42,11 @@ public class PanelPrincipal extends JPanel implements ActionListener {
 		JFrame frame =  (JFrame) this.getTopLevelAncestor();
     
 		if(e.getSource() == creer) {
-			frame.setExtendedState(frame.MAXIMIZED_BOTH);
+			//frame.setExtendedState(frame.MAXIMIZED_BOTH);
 			//frame.setSize(1000,900);
 			frame.setLocationRelativeTo(null);
 			frame.getContentPane().removeAll();
-	        frame.setContentPane(new PanelCreation());
+	        frame.setContentPane(new PanelInfoCrea());
 	        frame.repaint();
 	        frame.validate();
 		}
