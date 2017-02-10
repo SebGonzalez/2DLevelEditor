@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.HashMap;
@@ -16,6 +18,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JViewport;
 import javax.swing.TransferHandler;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -37,8 +41,31 @@ public class PanelCreation extends JPanel implements ActionListener {
 		this.add(test);
 		
 		 hauteur = (this.getHeight() - (2*(this.getHeight()/Frame.p.getListeNiveau().get(0).getGestionTexture().listeTileTexture.size()) ))/Frame.p.getListeNiveau().get(0).getGestionTexture().listeTileTexture.size();	
-		Frame.p.getListeNiveau().get(0).dessinerPlateauCreation(this, this.getWidth(), this.getHeight(), hauteur);
+		
 		Frame.p.getListeNiveau().get(0).getGestionTexture().dessinerTile(this.getWidth(), this.getHeight(), this); 
+		
+		JScrollPane scrollPane=new JScrollPane(Frame.p.getListeNiveau().get(0).dessinerPlateauCreation(this.getWidth(), this.getHeight(), hauteur)); 
+		scrollPane.setBounds(100, 100, this.getWidth()-200-2*hauteur, this.getHeight()-200);
+		//scrollPane.setSize(this.getWidth()-200-2*hauteur,this.getHeight()-200);
+		scrollPane.getViewport ().setScrollMode ( JViewport.SIMPLE_SCROLL_MODE );
+		scrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+ 
+			@Override
+			public void adjustmentValueChanged(AdjustmentEvent arg0) { 
+				revalidate();
+				repaint(); 
+			}
+		});
+		scrollPane.getHorizontalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+ 
+			@Override
+			public void adjustmentValueChanged(AdjustmentEvent arg0) { 
+				revalidate();
+				repaint(); 
+			}
+		});
+		
+		this.add(scrollPane);
 	}
 
 	public void paintComponent(Graphics g) {

@@ -3,11 +3,15 @@ package Projet;
 import gestionTexture.GestionTexture;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -63,7 +67,27 @@ public class Niveau {
 		lignePlateau.add(ligne);
 	}
 	
-	public void dessinerPlateauCreation(JPanel j, int width, int height, int hauteur) {
+	private static Component createPanel() {
+		JPanel panel = new JPanel(new GridLayout(0, 10));
+		panel.setSize(100, 100);
+ 
+		for(int i=0; i<100; i++) {
+			JPanel c = new JPanel();
+			c.setPreferredSize(new Dimension(64, 64));
+			c.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			c.setBackground(Color.WHITE);
+			panel.add(c);
+		}
+ 
+		return panel;
+	}
+	public Component dessinerPlateauCreation(int width, int height, int hauteur) {
+		
+        int nbCaseX = Frame.p.getListeNiveau().get(0).getNbcasex();
+        int nbCaseY = Frame.p.getListeNiveau().get(0).getNbcasey();
+        
+		JPanel j = new JPanel();
+		j.setLayout(new GridLayout(nbCaseX, nbCaseY));
 		
 		MouseListener ml = new MouseListener() {
 
@@ -88,8 +112,6 @@ public class Niveau {
             public void mouseExited(MouseEvent e) {}
         };
         
-        int nbCaseX = Frame.p.getListeNiveau().get(0).getNbcasex();
-        int nbCaseY = Frame.p.getListeNiveau().get(0).getNbcasey();
         
 		for(int i=0; i<nbCaseY; i++) {
 			HashMap<Integer, JLabel> ligne = new HashMap();
@@ -97,7 +119,8 @@ public class Niveau {
 				System.out.println(" oui : " + width);
 				JLabel p = new JLabel();
 				p.addMouseListener(ml);
-				p.setBounds(100+ y*(hauteur), 100 + i*( hauteur), hauteur, hauteur);
+				//p.setBounds(100+ y*(hauteur), 100 + i*( hauteur), hauteur, hauteur);
+				p.setPreferredSize(new Dimension(hauteur, hauteur));
 
 				//p.setBounds(100+ y*( (width-200-2*hauteur)/nbCaseX), 100 + i*( (height-200)/nbCaseY), ((width-200-2*hauteur)/nbCaseX), ((height-200)/nbCaseY));
 				p.setTransferHandler(new TransferHandler("icon"));
@@ -111,6 +134,7 @@ public class Niveau {
 			}
 			Frame.p.getListeNiveau().get(0).ajouterLigne(ligne);
 		}
+		return j;
 	}
 	
 	

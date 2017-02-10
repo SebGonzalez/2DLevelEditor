@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.TransferHandler;
 
 public class GestionTexture {
@@ -59,7 +60,6 @@ public class GestionTexture {
         };
         
 		int hauteur = (height - (2*(height/listeTileTexture.size()) ))/listeTileTexture.size();
-		
 		
 		for(int i=0; i<listeTileTexture.size(); i++) {
 			JLabel p = new JLabel();
