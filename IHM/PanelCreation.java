@@ -29,6 +29,11 @@ public class PanelCreation extends JPanel implements ActionListener {
 	int hauteur;
 	boolean oui = false;
 	
+	int xCaseNiveau;
+	int yCaseNiveau;
+	int widthCaseNiveau;
+	int heightCaseNiveau;
+	
 	public PanelCreation() {
 		
 		this.setLayout(null);
@@ -45,23 +50,42 @@ public class PanelCreation extends JPanel implements ActionListener {
 		Frame.p.getListeNiveau().get(0).getGestionTexture().dessinerTile(this.getWidth(), this.getHeight(), this); 
 		
 		JScrollPane scrollPane=new JScrollPane(Frame.p.getListeNiveau().get(0).dessinerPlateauCreation(this.getWidth(), this.getHeight(), hauteur)); 
-		scrollPane.setBounds(100, 100, this.getWidth()-200-2*hauteur, this.getHeight()-200);
-		//scrollPane.setSize(this.getWidth()-200-2*hauteur,this.getHeight()-200);
+		
+		//On vérifié si le nombre de case est inférieur à la taille max
+		
+		//si oui on définit la taille exact (+18 pour la taille de la scrollbar)
+		if( (this.getWidth()-200-2*hauteur)/hauteur > Frame.p.getListeNiveau().get(0).getNbcasex()) {
+			widthCaseNiveau = Frame.p.getListeNiveau().get(0).getNbcasex() * hauteur + 18;
+			xCaseNiveau = (((this.getWidth()-200-2*hauteur) - widthCaseNiveau) / 2) + 100;
+		}
+		else { //sinon on définit la taille maximal possible
+			widthCaseNiveau = this.getWidth()-200-2*hauteur;
+			xCaseNiveau = 100;
+		}
+		if( (this.getHeight()-200)/hauteur > Frame.p.getListeNiveau().get(0).getNbcasey()) {
+			heightCaseNiveau = Frame.p.getListeNiveau().get(0).getNbcasey() * hauteur;
+			yCaseNiveau = (((this.getHeight()-200) - heightCaseNiveau) / 2) + 100;
+		}
+		else {
+			heightCaseNiveau = this.getHeight()-200;
+			yCaseNiveau = 100;
+		}
+		scrollPane.setBounds(xCaseNiveau, yCaseNiveau, widthCaseNiveau, heightCaseNiveau);
 		scrollPane.getViewport ().setScrollMode ( JViewport.SIMPLE_SCROLL_MODE );
 		scrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
  
 			@Override
 			public void adjustmentValueChanged(AdjustmentEvent arg0) { 
-				revalidate();
-				repaint(); 
+				//revalidate();
+				//repaint(); 
 			}
 		});
 		scrollPane.getHorizontalScrollBar().addAdjustmentListener(new AdjustmentListener() {
  
 			@Override
 			public void adjustmentValueChanged(AdjustmentEvent arg0) { 
-				revalidate();
-				repaint(); 
+				//revalidate();
+				//repaint(); 
 			}
 		});
 		
@@ -71,7 +95,7 @@ public class PanelCreation extends JPanel implements ActionListener {
 	public void paintComponent(Graphics g) {
 		//Frame.p.getListeNiveau().get(0).getGestionTexture().dessinerTile(g, this.getWidth(), this.getHeight(), this); 
 		g.drawLine(this.getWidth()-hauteur*2, 0, this.getWidth()-hauteur*2, this.getHeight());
-		g.drawRect(100, 100, this.getWidth()-200-2*hauteur, this.getHeight()-200);
+		//g.drawRect(100, 100, this.getWidth()-200-2*hauteur, this.getHeight()-200);
 		
     }
 	

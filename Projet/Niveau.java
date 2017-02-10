@@ -87,7 +87,7 @@ public class Niveau {
         int nbCaseY = Frame.p.getListeNiveau().get(0).getNbcasey();
         
 		JPanel j = new JPanel();
-		j.setLayout(new GridLayout(nbCaseX, nbCaseY));
+		j.setLayout(new GridLayout(nbCaseY, nbCaseX));
 		
 		MouseListener ml = new MouseListener() {
 
@@ -116,7 +116,6 @@ public class Niveau {
 		for(int i=0; i<nbCaseY; i++) {
 			HashMap<Integer, JLabel> ligne = new HashMap();
 			for(int y=0; y<nbCaseX; y++) {
-				System.out.println(" oui : " + width);
 				JLabel p = new JLabel();
 				p.addMouseListener(ml);
 				//p.setBounds(100+ y*(hauteur), 100 + i*( hauteur), hauteur, hauteur);
