@@ -43,7 +43,7 @@ public class PanelPrincipal extends JPanel implements ActionListener {
     
 		if(e.getSource() == creer) {
 			//frame.setExtendedState(frame.MAXIMIZED_BOTH);
-			//frame.setSize(1000,900);
+			frame.setSize(500,300);
 			frame.setLocationRelativeTo(null);
 			frame.getContentPane().removeAll();
 	        frame.setContentPane(new PanelInfoCrea());
