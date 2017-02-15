@@ -67,20 +67,6 @@ public class Niveau {
 		lignePlateau.add(ligne);
 	}
 	
-	private static Component createPanel() {
-		JPanel panel = new JPanel(new GridLayout(0, 10));
-		panel.setSize(100, 100);
- 
-		for(int i=0; i<100; i++) {
-			JPanel c = new JPanel();
-			c.setPreferredSize(new Dimension(64, 64));
-			c.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			c.setBackground(Color.WHITE);
-			panel.add(c);
-		}
- 
-		return panel;
-	}
 	public Component dessinerPlateauCreation(int width, int height, int hauteur) {
 		
         int nbCaseX = Frame.p.getListeNiveau().get(0).getNbcasex();

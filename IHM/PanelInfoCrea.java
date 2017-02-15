@@ -32,6 +32,8 @@ public class PanelInfoCrea extends JPanel implements ActionListener{
 	private JTextField tftailley;
 	private JLabel nombredec;
 	private JTextField tfnombredec;
+	private JLabel nombreLigne;
+	private JTextField tfnombreLigne;
 	private JLabel src;
 	private JTextField tfsrc;
 	private JButton validation;
@@ -40,9 +42,6 @@ public class PanelInfoCrea extends JPanel implements ActionListener{
 	public File imagesrc;
 	public File imagedest;
 	private String fdest;
-	
-	private int nbdecoupage;
-	
 	
 public PanelInfoCrea() {
 	
@@ -54,8 +53,10 @@ public PanelInfoCrea() {
 	tailley.setBounds(50, 40, 200, 25);
 	src = new JLabel("src :");
 	src.setBounds(50, 70, 50, 25);
-	nombredec = new JLabel("Nombre d'éléments :");
+	nombredec = new JLabel("Nombre de colonne de l'image:");
 	nombredec.setBounds(50, 100, 200, 25);
+	nombreLigne = new JLabel("Nombre de ligne de l'image:");
+	nombreLigne.setBounds(50, 130, 200, 25);
 	
 	
 	tftaillex = new JTextField();
@@ -66,6 +67,8 @@ public PanelInfoCrea() {
 	tfsrc.setBounds(100, 70, 250, 25);
 	tfnombredec = new JTextField();
 	tfnombredec.setBounds(250, 100, 100, 25);
+	tfnombreLigne = new JTextField();
+	tfnombreLigne.setBounds(250, 130, 100, 25);
 	
 	
 	
@@ -77,6 +80,8 @@ public PanelInfoCrea() {
 	this.add(src);
 	this.add(tfsrc);
 	this.add(tfnombredec);
+	this.add(nombreLigne);
+	this.add(tfnombreLigne);
 		
 	validation = new JButton("Valider");
 	validation.setBounds(150, 190, 200, 50);
@@ -117,25 +122,28 @@ public void actionPerformed(ActionEvent e) {
     
 	if(e.getSource() == validation) {
 		
-		/*try {
+		try {
 			copyFile(imagesrc,imagedest);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}	*/											//commentaire à enlever
+		}												//commentaire à enlever
 		
      if (estUnEntier(tftaillex.getText())&& estUnEntier(tftailley.getText())&& estUnEntier(tfnombredec.getText())){
     	 
     	   int x= Integer.parseInt(tftaillex.getText());
            int y= Integer.parseInt(tftailley.getText());
-           int nbd=Integer.parseInt(tfnombredec.getText());
+           int nbdc=Integer.parseInt(tfnombredec.getText());
+           int nbdl=Integer.parseInt(tfnombreLigne.getText());
            Niveau n = new Niveau(x,y);
            Frame.p.ajouterNiveau(n);
-           Frame.p.getListeNiveau().get(0).getGestionTexture().decouperImage("src/"+fdest, nbd);//remplacer par "src/"+fdest
+           Frame.p.getListeNiveau().get(0).getGestionTexture().setNbColonne(nbdc);
+           Frame.p.getListeNiveau().get(0).getGestionTexture().setNbLigne(nbdl);
+           Frame.p.getListeNiveau().get(0).getGestionTexture().decouperImage("src/"+fdest);//remplacer par "src/"+fdest
            
            	//frame.setExtendedState(frame.MAXIMIZED_BOTH);
            Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-           	frame.setSize((int)dimension.getWidth(), (int)dimension.getHeight());
+           	frame.setSize((int)dimension.getWidth(), (int)dimension.getHeight()-30);
    			frame.setLocationRelativeTo(null);
    			frame.getContentPane().removeAll();
    			frame.setContentPane(new PanelCreation());
