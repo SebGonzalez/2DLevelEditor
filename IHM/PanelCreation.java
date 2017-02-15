@@ -1,4 +1,5 @@
 package IHM;
+import Projet.Memoire;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -28,6 +29,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class PanelCreation extends JPanel implements ActionListener {
 	
+	private JButton sauvegarder;
 	int hauteur;
 	boolean oui = false;
 	
@@ -35,12 +37,18 @@ public class PanelCreation extends JPanel implements ActionListener {
 	int yCaseNiveau;
 	int widthCaseNiveau;
 	int heightCaseNiveau;
+	String cheminSauvegarde;
 	
 	public PanelCreation() {
 		
 		this.setLayout(null);
 		Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
        	this.setSize((int)dimension.getWidth(), (int)dimension.getHeight());
+       	
+       	sauvegarder = new JButton("Sauvegarder");
+       	sauvegarder.setBounds(50,50,150,50);
+       	sauvegarder.addActionListener(this);
+		this.add(sauvegarder);
 		
 		 hauteur = (this.getHeight() - (2*(this.getHeight()/Frame.p.getListeNiveau().get(0).getGestionTexture().listeTileTexture.size()) ))/Frame.p.getListeNiveau().get(0).getGestionTexture().listeTileTexture.size();
 		 hauteur = this.getHeight()/8 - 34;
@@ -86,7 +94,21 @@ public class PanelCreation extends JPanel implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		
+		if(e.getSource() == sauvegarder) {
+			JFileChooser fc = new JFileChooser();
+			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+			//fc.addChoosableFileFilter(new FileNameExtensionFilter("Images", "bmp"));
+			//fc.setFileFilter(new FileNameExtensionFilter("Images (bmp, jpg, png)", "bmp", "jpg", "png"));
+			//int returnVal = fc.showOpenDialog(this);
+			if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+	    	{	
+				System.out.println(fc.getSelectedFile().getAbsolutePath()); //si un fichier est selectionné, récupérer le fichier puis sont path et l'afficher dans le champs de texte
+				cheminSauvegarde=fc.getSelectedFile().getAbsolutePath();		
+				Memoire.save(Frame.p, cheminSauvegarde);
+				
+	    	}
+			
+			
+		}	
 	}
 }

@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -20,11 +21,12 @@ import javax.swing.TransferHandler;
 
 import IHM.Frame;
 
-public class Niveau {
+public class Niveau implements Serializable{
 	
 	private int nbCasex;
 	private int nbCasey;
-
+	private String fichierImage;
+	
 	int width = 800;
 	int height = 450;
 	
@@ -36,7 +38,7 @@ public class Niveau {
 		gestionTexture = new GestionTexture();
 	}
 	
-	public Niveau(int nbx, int nby) {
+	public Niveau(int nbx, int nby) {	
 		gestionTexture = new GestionTexture();
 		lignePlateau = new ArrayList<>();
 		nbCasex=nbx;
@@ -61,6 +63,15 @@ public class Niveau {
 
 	public void setNbcasey(int nbcasey) {
 		this.nbCasey = nbcasey;
+	}
+	
+
+	public String getFichierImage() {
+		return fichierImage;
+	}
+	
+	public void setFichierImage(String fichierImage) {
+		this.fichierImage = fichierImage;
 	}
 	
 	public void ajouterLigne(HashMap ligne) {

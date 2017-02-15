@@ -8,6 +8,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -17,11 +18,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.TransferHandler;
 
-public class GestionTexture {
+public class GestionTexture implements Serializable{
 	
 	public ArrayList<Image> listeTileTexture;
 	private int nbLigne;
 	private int nbColonne;
+	public transient ArrayList<Image> listeTileTexture;
 	
 	public GestionTexture() {
 		listeTileTexture = new ArrayList<Image>();
