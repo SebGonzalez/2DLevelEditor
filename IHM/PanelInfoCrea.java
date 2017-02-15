@@ -40,6 +40,7 @@ public class PanelInfoCrea extends JPanel implements ActionListener{
 	public File imagesrc;
 	public File imagedest;
 	private String fdest;
+	private String pathsource;
 	
 	private int nbdecoupage;
 	
@@ -131,8 +132,8 @@ public void actionPerformed(ActionEvent e) {
            int nbd=Integer.parseInt(tfnombredec.getText());
            Niveau n = new Niveau(x,y);
            Frame.p.ajouterNiveau(n);
-           Frame.p.getListeNiveau().get(0).getGestionTexture().decouperImage("src/"+fdest, nbd);//remplacer par "src/"+fdest
-           
+           Frame.p.getListeNiveau().get(0).getGestionTexture().decouperImage("src/image/salut.bmp", nbd);//remplacer par pathsource
+           Frame.p.getListeNiveau().get(0).setFichierImage("src/image/salut.bmp");
            	//frame.setExtendedState(frame.MAXIMIZED_BOTH);
            Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
            	frame.setSize((int)dimension.getWidth(), (int)dimension.getHeight());
@@ -158,15 +159,15 @@ public void actionPerformed(ActionEvent e) {
 		if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
     	{	
 			imagesrc = fc.getSelectedFile();
-			
+			pathsource = imagesrc.getPath();
 			tfsrc.setText(imagesrc.getPath());
-			
+			/*
 			fdest = imagesrc.getName();
 			imagedest = new File("D:/TESTIMAGE/bo/"+fdest);
 			String path = System.getProperty("user.dir");//chemin du projet
-			imagedest = new File(path+"/src/"+fdest);//chemin ou le fichier devra etre copié
+			imagedest = new File(path+"/src/image/"+fdest);//chemin ou le fichier devra etre copié
 			
-			/*System.out.println("image source : " + imagesrc);
+			System.out.println("image source : " + imagesrc);
 			System.out.println("chemin destination : " + imagedest);
 			System.out.println(fc.getSelectedFile().getAbsolutePath()); //si un fichier est selectionné, récupérer le fichier puis sont path et l'afficher dans le champs de texte
 			System.out.println("source projet : " + path);*/

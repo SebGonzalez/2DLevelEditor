@@ -1,8 +1,9 @@
 package Projet;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Projet {
+public class Projet implements Serializable{
 	
 	public ArrayList<Niveau> listeNiveau;
 	

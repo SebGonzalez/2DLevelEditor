@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.Icon;
@@ -17,9 +18,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.TransferHandler;
 
-public class GestionTexture {
+public class GestionTexture implements Serializable{
 	
-	public ArrayList<Image> listeTileTexture;
+	public transient ArrayList<Image> listeTileTexture;
 	
 	public GestionTexture() {
 		listeTileTexture = new ArrayList<Image>();
