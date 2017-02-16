@@ -20,9 +20,9 @@ import javax.swing.TransferHandler;
 
 public class GestionTexture implements Serializable{
 	
-	public ArrayList<Image> listeTileTexture;
 	private int nbLigne;
 	private int nbColonne;
+	private String image;
 	public transient ArrayList<Image> listeTileTexture;
 	
 	public GestionTexture() {
@@ -44,9 +44,18 @@ public class GestionTexture implements Serializable{
 	public void setNbColonne(int nbColonne) {
 		this.nbColonne = nbColonne;
 	}
+	
+	public void setImage(String fichier) {
+		this.image = fichier;
+	}
+	
+	public String getImage() {
+		return image;
+	}
 
-	public BufferedImage decouperImage(String fichierBmp) {
-		File f = new File(fichierBmp);
+	public BufferedImage decouperImage() {
+		listeTileTexture = new ArrayList<Image>();
+		File f = new File(image);
 		BufferedImage img = null;
 		try {
 			img = ImageIO.read(f);
@@ -62,7 +71,6 @@ public class GestionTexture implements Serializable{
 			for(int i=0; i<nbColonne; i++) {
 				Image newImg = img.getSubimage(i*(img.getWidth()/nbColonne), y*(img.getHeight()/nbLigne), (img.getWidth()/nbColonne), img.getHeight()/nbLigne);
 				listeTileTexture.add(newImg);
-				System.out.println(" x : " + i*(img.getWidth()/nbColonne) + " y : " + y*(img.getHeight()/nbLigne) + " width : " + (img.getWidth()/nbColonne) + " height : " + img.getHeight()/nbLigne);
 			}
 		}
 		return img;

@@ -123,12 +123,12 @@ public void actionPerformed(ActionEvent e) {
     
 	if(e.getSource() == validation) {
 		
-		try {
+		/*try {
 			copyFile(imagesrc,imagedest);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}												//commentaire à enlever
+		}*/												//commentaire à enlever
 		
      if (estUnEntier(tftaillex.getText())&& estUnEntier(tftailley.getText())&& estUnEntier(tfnombredec.getText())){
     	 
@@ -140,8 +140,8 @@ public void actionPerformed(ActionEvent e) {
            Frame.p.ajouterNiveau(n);
            Frame.p.getListeNiveau().get(0).getGestionTexture().setNbColonne(nbdc);
            Frame.p.getListeNiveau().get(0).getGestionTexture().setNbLigne(nbdl);
-           Frame.p.getListeNiveau().get(0).getGestionTexture().decouperImage("src/"+fdest);//remplacer par "src/"+fdest
-           Frame.p.getListeNiveau().get(0).getGestionTexture().decouperImage("src/image/salut.bmp", nbd);//remplacer par pathsource
+           Frame.p.getListeNiveau().get(0).getGestionTexture().setImage(pathsource);
+           Frame.p.getListeNiveau().get(0).getGestionTexture().decouperImage();//remplacer par pathsource
            Frame.p.getListeNiveau().get(0).setFichierImage("src/image/salut.bmp");
            	//frame.setExtendedState(frame.MAXIMIZED_BOTH);
            Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();

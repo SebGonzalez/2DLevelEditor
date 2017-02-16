@@ -94,13 +94,19 @@ public class Niveau implements Serializable{
             @Override
             public void mousePressed(MouseEvent e) {
             
-                JComponent jc = (JComponent)e.getSource();
+            	LabelCustom jc = (LabelCustom)e.getSource();
                 TransferHandler th = jc.getTransferHandler();
                 th.exportAsDrag(jc, e, TransferHandler.COPY);
+               // System.out.println(" x : " + jc.getLigne());
+               // System.out.println(" y : " + jc.getColonne());
             }
 
             @Override
-            public void mouseReleased(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {
+            	LabelCustom jc = (LabelCustom)e.getSource();
+                System.out.println(" x : " + jc.getLigne());
+                System.out.println(" y : " + jc.getColonne());
+            }
 
             @Override
             public void mouseEntered(MouseEvent e) {}
@@ -113,16 +119,14 @@ public class Niveau implements Serializable{
 		for(int i=0; i<nbCaseY; i++) {
 			HashMap<Integer, JLabel> ligne = new HashMap();
 			for(int y=0; y<nbCaseX; y++) {
-				JLabel p = new JLabel();
+				LabelCustom p = new LabelCustom(i, y);
 				p.addMouseListener(ml);
 				//p.setBounds(100+ y*(hauteur), 100 + i*( hauteur), hauteur, hauteur);
 				p.setPreferredSize(new Dimension(hauteur, hauteur));
-
+				p.setBackground(Color.white);
 				//p.setBounds(100+ y*( (width-200-2*hauteur)/nbCaseX), 100 + i*( (height-200)/nbCaseY), ((width-200-2*hauteur)/nbCaseX), ((height-200)/nbCaseY));
 				p.setTransferHandler(new TransferHandler("icon"));
-				p.setBackground(Color.white);
 				p.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-				
 				p.setOpaque(true);
 				p.setVisible(true);
 				j.add(p);

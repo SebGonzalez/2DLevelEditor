@@ -2,7 +2,9 @@ package IHM;
 
 import java.awt.Dimension;
 import java.awt.Font;
+
 import Projet.*;
+
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -66,17 +68,14 @@ public class PanelPrincipal extends JPanel implements ActionListener {
 			//int returnVal = fc.showOpenDialog(this);
 			if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 	    	{	
-				System.out.println(fc.getSelectedFile().getAbsolutePath()); //si un fichier est selectionné, récupérer le fichier puis sont path et l'afficher dans le champs de texte
+				System.out.println(fc.getSelectedFile().getAbsolutePath());
 				String cheminSauvegarde=fc.getSelectedFile().getAbsolutePath();		
 				
 				Object o = Memoire.read(cheminSauvegarde);
 				Frame.p=(Projet)o;
-				
-				//System.out.println(Frame.p.getListeNiveau().get(0).getGestionTexture().listeTileTexture.size());
-				Frame.p.getListeNiveau().get(0).getGestionTexture().decouperImage(Frame.p.getListeNiveau().get(0).getFichierImage(),8 );
-				//System.out.println(Frame.p.getListeNiveau().get(0).getFichierImage());
-				//System.out.println(Frame.p.getListeNiveau().get(0));//Projet.Projet@4d0eb98c
-				System.out.println(Frame.p.getListeNiveau().get(0).getFichierImage().toString());
+				Frame.p.listeNiveau.get(0).getGestionTexture().decouperImage();
+				System.out.println("oui : " + Frame.p.getListeNiveau().get(0).getGestionTexture().listeTileTexture.size());
+				//System.out.println("oui : " + Frame.p.getListeNiveau().get(0).getGestionTexture().getImage());
 				
 				Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 	           	frame.setSize((int)dimension.getWidth(), (int)dimension.getHeight());

@@ -1,33 +1,23 @@
 package IHM;
-import Projet.Memoire;
-
-import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.InputStream;
-import java.util.HashMap;
+import java.awt.event.MouseMotionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
-import javax.swing.TransferHandler;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class PanelCreation extends JPanel implements ActionListener {
+import Projet.Memoire;
+
+public class PanelCreation extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
 	
 	private JButton sauvegarder;
 	int hauteur;
@@ -37,7 +27,14 @@ public class PanelCreation extends JPanel implements ActionListener {
 	int yCaseNiveau;
 	int widthCaseNiveau;
 	int heightCaseNiveau;
+	int widthTexture;
 	String cheminSauvegarde;
+	int xBarre;
+	JScrollPane scrollPane;
+	JScrollPane scrollPaneTexture;
+	boolean cliqueBarre = false;
+	
+	private Point lastPosition;
 	
 	public PanelCreation() {
 		
@@ -53,7 +50,7 @@ public class PanelCreation extends JPanel implements ActionListener {
 		 hauteur = (this.getHeight() - (2*(this.getHeight()/Frame.p.getListeNiveau().get(0).getGestionTexture().listeTileTexture.size()) ))/Frame.p.getListeNiveau().get(0).getGestionTexture().listeTileTexture.size();
 		 hauteur = this.getHeight()/8 - 34;
 		
-		JScrollPane scrollPane=new JScrollPane(Frame.p.getListeNiveau().get(0).dessinerPlateauCreation(this.getWidth(), this.getHeight(), hauteur)); 
+		scrollPane=new JScrollPane(Frame.p.getListeNiveau().get(0).dessinerPlateauCreation(this.getWidth(), this.getHeight(), hauteur)); 
 		
 		//On vérifié si le nombre de case est inférieur à la taille max
 		
@@ -78,18 +75,24 @@ public class PanelCreation extends JPanel implements ActionListener {
 		scrollPane.getViewport ().setScrollMode ( JViewport.SIMPLE_SCROLL_MODE );
 		this.add(scrollPane);
 		
-		JScrollPane scrollPaneTexture=new JScrollPane(Frame.p.getListeNiveau().get(0).getGestionTexture().dessinerTile(this.getWidth(), this.getHeight())); 
+		scrollPaneTexture=new JScrollPane(Frame.p.getListeNiveau().get(0).getGestionTexture().dessinerTile(this.getWidth(), this.getHeight())); 
 		scrollPaneTexture.setBounds(widthCaseNiveau+xCaseNiveau+60, 20, this.getWidth() - (widthCaseNiveau+xCaseNiveau+60)-30, this.getHeight()-100);
 		scrollPaneTexture.getViewport ().setScrollMode ( JViewport.SIMPLE_SCROLL_MODE );
 		this.add(scrollPaneTexture);
+		
+		xBarre = widthCaseNiveau+xCaseNiveau+30;
+		widthTexture = this.getWidth()-(widthCaseNiveau+xCaseNiveau+60)-30;
+		addMouseListener(this);
+		addMouseMotionListener(this);
 	}
 
-	public void paintComponent(Graphics g) {
-		//Frame.p.getListeNiveau().get(0).getGestionTexture().dessinerTile(g, this.getWidth(), this.getHeight(), this); 
-		g.drawLine(widthCaseNiveau+xCaseNiveau+30 , 0, widthCaseNiveau+xCaseNiveau+30, this.getHeight());
-		//g.drawRect(100, 100, this.getWidth()-200-2*hauteur, this.getHeight()-200);
-		//g.drawImage(Frame.p.listeNiveau.get(0).getGestionTexture().decouperImage("C:/Users/gonzo/Desktop/tiles.bmp"), 0,0,257,257, null);
-		
+	public void paintComponent(Graphics g) { 
+		super.paintComponent(g);
+		scrollPane.setBounds(xCaseNiveau, yCaseNiveau, widthCaseNiveau, heightCaseNiveau);
+		scrollPaneTexture.setBounds(xBarre+30, 20, widthTexture, this.getHeight()-100);
+
+		g.drawLine(xBarre , 0, xBarre, this.getHeight());
+		System.out.println(" boolean : " + cliqueBarre + " x : " + xBarre);
     }
 	
 	@Override
@@ -102,13 +105,67 @@ public class PanelCreation extends JPanel implements ActionListener {
 			//int returnVal = fc.showOpenDialog(this);
 			if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 	    	{	
-				System.out.println(fc.getSelectedFile().getAbsolutePath()); //si un fichier est selectionné, récupérer le fichier puis sont path et l'afficher dans le champs de texte
 				cheminSauvegarde=fc.getSelectedFile().getAbsolutePath();		
 				Memoire.save(Frame.p, cheminSauvegarde);
-				
 	    	}
 			
 			
 		}	
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {	
+	}
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+		if(e.getX() < xBarre+20 && e.getX()> xBarre-20) {
+			cliqueBarre = true;
+			lastPosition = e.getPoint();
+		}
+	}
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		cliqueBarre = false;
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		Point p = e.getPoint();
+		if(cliqueBarre) {
+			if(p.getX() < lastPosition.getX()) {
+				xBarre = e.getX();
+				widthCaseNiveau -= lastPosition.getX()-p.getX();
+				widthTexture += lastPosition.getX()-p.getX();
+				lastPosition = p;
+			}
+			else {
+				xBarre = e.getX();
+				widthCaseNiveau += Math.abs(lastPosition.getX()-p.getX());
+				widthTexture -= Math.abs(lastPosition.getX()-p.getX());
+				lastPosition = p;
+			}
+			repaint();
+			scrollPane.revalidate();
+			scrollPaneTexture.revalidate();
+		}
+		
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		if(e.getX() < xBarre+20 && e.getX()> xBarre-20) {
+			setCursor(Cursor.getPredefinedCursor(Cursor.E_RESIZE_CURSOR));
+		}
+		else {
+			setCursor(Cursor.getDefaultCursor());
+		}
 	}
 }
