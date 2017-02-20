@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -73,6 +75,22 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 		}
 		scrollPane.setBounds(xCaseNiveau, yCaseNiveau, widthCaseNiveau, heightCaseNiveau);
 		scrollPane.getViewport ().setScrollMode ( JViewport.SIMPLE_SCROLL_MODE );
+		scrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+			 
+			@Override
+			public void adjustmentValueChanged(AdjustmentEvent arg0) { 
+				revalidate();
+				repaint(); 
+			}
+		});
+		scrollPane.getHorizontalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+ 
+			@Override
+			public void adjustmentValueChanged(AdjustmentEvent arg0) { 
+				revalidate();
+				repaint(); 
+			}
+		});
 		this.add(scrollPane);
 		
 		scrollPaneTexture=new JScrollPane(Frame.p.getListeNiveau().get(0).getGestionTexture().dessinerTile(this.getWidth(), this.getHeight())); 
