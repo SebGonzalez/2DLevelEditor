@@ -5,6 +5,10 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -28,6 +32,7 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 	int widthCaseNiveau;
 	int heightCaseNiveau;
 	int widthTexture;
+	int hauteurFrame;
 	String cheminSauvegarde;
 	int xBarre;
 	JScrollPane scrollPane;
@@ -41,6 +46,21 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 		this.setLayout(null);
 		Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
        	this.setSize((int)dimension.getWidth(), (int)dimension.getHeight());
+       	hauteurFrame = this.getHeight();
+       	
+       	ComponentListener componentListener = new ComponentListener() {
+			@Override
+			public void componentHidden(ComponentEvent arg0) {}
+			@Override
+			public void componentMoved(ComponentEvent arg0) {}
+			@Override
+			public void componentResized(ComponentEvent arg0) {
+				hauteurFrame = getHeight();
+			}
+			@Override
+			public void componentShown(ComponentEvent arg0) {}
+       	};
+       	this.addComponentListener(componentListener);
        	
        	sauvegarder = new JButton("Enregistrer");
        	sauvegarder.setBounds(50,50,150,50);
@@ -73,9 +93,27 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 		}
 		scrollPane.setBounds(xCaseNiveau, yCaseNiveau, widthCaseNiveau, heightCaseNiveau);
 		scrollPane.getViewport ().setScrollMode ( JViewport.SIMPLE_SCROLL_MODE );
+		scrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+			 
+			@Override
+			public void adjustmentValueChanged(AdjustmentEvent arg0) { 
+				revalidate();
+				repaint(); 
+			}
+		});
+		scrollPane.getHorizontalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+ 
+			@Override
+			public void adjustmentValueChanged(AdjustmentEvent arg0) { 
+				revalidate();
+				repaint(); 
+			}
+		});
+		scrollPane.setBounds(xCaseNiveau, yCaseNiveau, widthCaseNiveau, heightCaseNiveau);
 		this.add(scrollPane);
 		
 		scrollPaneTexture=new JScrollPane(Frame.p.getListeNiveau().get(0).getGestionTexture().dessinerTile(this.getWidth(), this.getHeight())); 
+		scrollPaneTexture.setBounds(xBarre+30, 20, widthTexture, hauteurFrame-100);
 		scrollPaneTexture.setBounds(widthCaseNiveau+xCaseNiveau+60, 20, this.getWidth() - (widthCaseNiveau+xCaseNiveau+60)-30, this.getHeight()-100);
 		scrollPaneTexture.getViewport ().setScrollMode ( JViewport.SIMPLE_SCROLL_MODE );
 		this.add(scrollPaneTexture);
@@ -88,11 +126,7 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 
 	public void paintComponent(Graphics g) { 
 		super.paintComponent(g);
-		scrollPane.setBounds(xCaseNiveau, yCaseNiveau, widthCaseNiveau, heightCaseNiveau);
-		scrollPaneTexture.setBounds(xBarre+30, 20, widthTexture, this.getHeight()-100);
-
 		g.drawLine(xBarre , 0, xBarre, this.getHeight());
-		System.out.println(" boolean : " + cliqueBarre + " x : " + xBarre);
     }
 	
 	@Override
@@ -144,12 +178,16 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 				widthCaseNiveau -= lastPosition.getX()-p.getX();
 				widthTexture += lastPosition.getX()-p.getX();
 				lastPosition = p;
+				scrollPane.setBounds(xCaseNiveau, yCaseNiveau, widthCaseNiveau, heightCaseNiveau);
+				scrollPaneTexture.setBounds(xBarre+30, 20, widthTexture, hauteurFrame-100);
 			}
 			else {
 				xBarre = e.getX();
 				widthCaseNiveau += Math.abs(lastPosition.getX()-p.getX());
 				widthTexture -= Math.abs(lastPosition.getX()-p.getX());
 				lastPosition = p;
+				scrollPane.setBounds(xCaseNiveau, yCaseNiveau, widthCaseNiveau, heightCaseNiveau);
+				scrollPaneTexture.setBounds(xBarre+30, 20, widthTexture, hauteurFrame-100);
 			}
 			repaint();
 			scrollPane.revalidate();
