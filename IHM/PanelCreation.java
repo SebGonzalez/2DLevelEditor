@@ -42,7 +42,7 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 		Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
        	this.setSize((int)dimension.getWidth(), (int)dimension.getHeight());
        	
-       	sauvegarder = new JButton("Sauvegarder");
+       	sauvegarder = new JButton("Enregistrer");
        	sauvegarder.setBounds(50,50,150,50);
        	sauvegarder.addActionListener(this);
 		this.add(sauvegarder);
@@ -103,7 +103,7 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 			//fc.addChoosableFileFilter(new FileNameExtensionFilter("Images", "bmp"));
 			//fc.setFileFilter(new FileNameExtensionFilter("Images (bmp, jpg, png)", "bmp", "jpg", "png"));
 			//int returnVal = fc.showOpenDialog(this);
-			if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+			if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
 	    	{	
 				cheminSauvegarde=fc.getSelectedFile().getAbsolutePath();		
 				Memoire.save(Frame.p, cheminSauvegarde);
