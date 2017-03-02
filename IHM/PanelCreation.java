@@ -216,7 +216,7 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 				Memoire.save(Frame.p, cheminSauvegarde);
 	    	}*/
 		
-		if(e.getSource() == sauvegarder) {
+		/*if(e.getSource() == sauvegarder) {
 			JFileChooser fc = new JFileChooser();
 			fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
@@ -224,7 +224,7 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 				cheminSauvegarde=fc.getSelectedFile().getAbsolutePath();		
 				Frame.p.export(cheminSauvegarde);
 	    	}
-		}	
+		}	*/
 	}
 
 	@Override

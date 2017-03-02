@@ -29,12 +29,12 @@ public class GestionTexture implements Serializable{
 	private int nbColonne;
 	private String image;
 	public transient ArrayList<Image> listeTileTexture;
-	public ArrayList<String> listeTypeTexture;
+	public ArrayList<String> listeTypeBlock;
 	public String[] typeTexture;
 	
 	public GestionTexture() {
 		listeTileTexture = new ArrayList<Image>();
-		listeTypeTexture = new ArrayList<String>();
+		listeTypeBlock = new ArrayList<String>();
 		typeTexture = new String[listeTileTexture.size()];
 	}
 	
@@ -76,16 +76,16 @@ public class GestionTexture implements Serializable{
 		return true;
 	}
 	
-	//ajoute les type de texture
-	public boolean setListeTypeTexture(ArrayList<JTextField> listeTextField) {
-		listeTypeTexture.clear();
+	//ajoute les type de block
+	public boolean setListeTypeBlock(ArrayList<JTextField> listeTextField) {
+		listeTypeBlock.clear();
 		for(int i=0; i<listeTextField.size(); i++) {
 			if(!listeTextField.get(i).getText().equals("")) {
-				listeTypeTexture.add(listeTextField.get(i).getText());
+				listeTypeBlock.add(listeTextField.get(i).getText());
 			}
 		}
 		
-		if(listeTypeTexture.size() == 0) return false;
+		if(listeTypeBlock.size() == 0) return false;
 		return true;
 	}
 
