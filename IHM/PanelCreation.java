@@ -1,8 +1,10 @@
 package IHM;
 import gestionTexture.IconCustom;
-
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -15,18 +17,42 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JViewport;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 
 import Projet.Memoire;
 
 public class PanelCreation extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
 	
-	private JButton sauvegarder;
+	private JMenuBar menuBar = new JMenuBar();
+	private JMenu menuSauvegarder = new JMenu("Sauvegarder");
+	private JMenu menuAjoutern = new JMenu("Ajouter niveau");
+	private JMenu menuSupprimern = new JMenu("Supprimer niveau");
+	private JMenu menuExporter = new JMenu("Exporter");
+
+	/*private JMenuItem item1 = new JMenuItem("Ouvrir");
+	private JMenuItem item2 = new JMenuItem("Fermer");
+	private JMenuItem item3 = new JMenuItem("Lancer");
+	private JMenuItem item4 = new JMenuItem("Arrêter");*/
+
+    /*private JCheckBoxMenuItem jcmi1 = new JCheckBoxMenuItem("Choix 1");
+	private JCheckBoxMenuItem jcmi2 = new JCheckBoxMenuItem("Choix 2");
+
+    private JRadioButtonMenuItem jrmi1 = new JRadioButtonMenuItem("Radio 1");
+	private JRadioButtonMenuItem jrmi2 = new JRadioButtonMenuItem("Radio 2");*/
+	
 	int hauteur;
 	boolean oui = false;
 	
@@ -49,6 +75,7 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 	public PanelCreation() {
 		
 		this.setLayout(null);
+		this.setBackground(new Color(241,241,241));//226,234,247
 		Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
        	this.setSize((int)dimension.getWidth(), (int)dimension.getHeight());
        	hauteurFrame = this.getHeight();
@@ -67,10 +94,49 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
        	};
        	this.addComponentListener(componentListener);
        	
-       	sauvegarder = new JButton("Enregistrer");
+  /*---------------------------------------------------Menu-------------------------------------------------------- */	
+       	
+       	Font font = new Font("serial", Font.PLAIN, 17);
+       	
+       	menuSauvegarder.setFont(font);
+       	menuSauvegarder.setForeground(Color.white);
+       	menuSauvegarder.setBorder(BorderFactory.createEmptyBorder(0, 50, 0,50));
+       	
+       	menuAjoutern.setFont(font);
+       	menuAjoutern.setForeground(Color.white);
+       	menuAjoutern.setBorder(BorderFactory.createEmptyBorder(0, 50, 0,50));
+       	
+       	menuSupprimern.setFont(font);
+       	menuSupprimern.setForeground(Color.white);
+       	menuSupprimern.setBorder(BorderFactory.createEmptyBorder(0, 50, 0,50));
+       	
+       	menuExporter.setFont(font);
+       	menuExporter.setForeground(Color.white);
+       	menuExporter.setBorder(BorderFactory.createEmptyBorder(0, 50, 0,50));//
+       	//menuExporter.setBorder(BorderFactory.createBevelBorder (0, 1, 0,1, Color.GRAY));
+       	
+       	menuSauvegarder.addMenuListener(new SampleMenuListener());
+       	
+       	this.menuBar.add(menuAjoutern);
+       	//this.menuBar.add(new JSeparator(JSeparator.VERTICAL),"growy");
+        this.menuBar.add(menuSupprimern);
+        this.menuBar.add(menuSauvegarder);
+        this.menuBar.add(menuExporter);
+        
+        
+        menuBar.setBounds(0,0,this.getWidth(),60);
+        menuBar.setBackground(new Color(43, 87, 154));
+        this.add(menuBar);
+        
+        /*JFrame frame = (JFrame)this.getTopLevelAncestor();
+        frame.setJMenuBar(menuBar);	*/
+       	
+       	
+  /*---------------------------------------------------Menu---------------------------------------------------------*/     	
+       	/*sauvegarder = new JButton("Enregistrer");
        	sauvegarder.setBounds(50,50,150,50);
        	sauvegarder.addActionListener(this);
-		this.add(sauvegarder);
+		this.add(sauvegarder);*/
 		
 		 hauteur = (this.getHeight() - (2*(this.getHeight()/Frame.p.getListeNiveau().get(0).getGestionTexture().listeTileTexture.size()) ))/Frame.p.getListeNiveau().get(0).getGestionTexture().listeTileTexture.size();
 		 hauteur = this.getHeight()/8 - 34;
@@ -219,5 +285,36 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 		else {
 			setCursor(Cursor.getDefaultCursor());
 		}
+	}
+	
+	class SampleMenuListener implements MenuListener {
+
+	    @Override
+	    public void menuSelected(MenuEvent e) {
+	    	if(e.getSource() == menuSauvegarder) {
+				JFileChooser fc = new JFileChooser();
+				fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				//fc.addChoosableFileFilter(new FileNameExtensionFilter("Images", "bmp"));
+				//fc.setFileFilter(new FileNameExtensionFilter("Images (bmp, jpg, png)", "bmp", "jpg", "png"));
+				//int returnVal = fc.showOpenDialog(this);
+				if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
+		    	{	
+					cheminSauvegarde=fc.getSelectedFile().getAbsolutePath();		
+					Memoire.save(Frame.p, cheminSauvegarde);
+		    	}
+				
+				
+			}
+	    }
+
+	    @Override
+	    public void menuDeselected(MenuEvent e) {
+	        System.out.println("menuDeselected");
+	    }
+
+	    @Override
+	    public void menuCanceled(MenuEvent e) {
+	        System.out.println("menuCanceled");
+	    }
 	}
 }

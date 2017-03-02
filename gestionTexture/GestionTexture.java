@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -115,6 +116,8 @@ public class GestionTexture implements Serializable{
 		
 		JPanel j = new JPanel();
 		GridLayout gl = new GridLayout(nbLigne, nbColonne);
+		j.setBackground(new Color(241,241,241));
+
 		gl.setHgap(30);
 		gl.setVgap(30);
 		j.setLayout(gl);

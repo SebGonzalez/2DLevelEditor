@@ -4,11 +4,6 @@ import javax.swing.JLabel;
 
 public class LabelCustomTexture extends JLabel{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
 	private int id;
 
 	public LabelCustomTexture(int id) {
