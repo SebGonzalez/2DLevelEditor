@@ -60,15 +60,15 @@ public PanelInfoCrea() {
 	nombreLigne.setBounds(50, 130, 200, 25);
 	
 	
-	tftaillex = new JTextField();
+	tftaillex = new JTextField("100");
 	tftaillex.setBounds(250, 10, 100, 25);
-	tftailley = new JTextField();
+	tftailley = new JTextField("100");
 	tftailley.setBounds(250, 40, 100, 25);
-	tfsrc = new JTextField();
+	tfsrc = new JTextField("");
 	tfsrc.setBounds(100, 70, 250, 25);
-	tfnombredec = new JTextField();
+	tfnombredec = new JTextField("16");
 	tfnombredec.setBounds(250, 100, 100, 25);
-	tfnombreLigne = new JTextField();
+	tfnombreLigne = new JTextField("12");
 	tfnombreLigne.setBounds(250, 130, 100, 25);
 	
 	
@@ -106,29 +106,11 @@ public boolean estUnEntier(String chaine) {
 	return true;
 }
 
-public void copyFile (File src, File dest) throws IOException {
-	InputStream in = new BufferedInputStream(new FileInputStream(src));
-	OutputStream out = new BufferedOutputStream(new FileOutputStream(dest));
-	byte[] buf = new byte[4096];
-	int n;
-	while ((n=in.read(buf, 0, buf.length)) > 0)
-		out.write(buf, 0, n);
-	in.close();
-	out.close();
-}
-
 @Override
 public void actionPerformed(ActionEvent e) {
 	JFrame frame =  (JFrame) this.getTopLevelAncestor();
     
 	if(e.getSource() == validation) {
-		
-		/*try {
-			copyFile(imagesrc,imagedest);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/												//commentaire à enlever
 		
      if (estUnEntier(tftaillex.getText())&& estUnEntier(tftailley.getText())&& estUnEntier(tfnombredec.getText())){
     	 
@@ -140,17 +122,15 @@ public void actionPerformed(ActionEvent e) {
            Frame.p.ajouterNiveau(n);
            Frame.p.getListeNiveau().get(0).getGestionTexture().setNbColonne(nbdc);
            Frame.p.getListeNiveau().get(0).getGestionTexture().setNbLigne(nbdl);
-           Frame.p.getListeNiveau().get(0).getGestionTexture().setImage(pathsource);
-           Frame.p.getListeNiveau().get(0).getGestionTexture().decouperImage();//remplacer par pathsource
-           Frame.p.getListeNiveau().get(0).setFichierImage("src/image/salut.bmp");
-           	//frame.setExtendedState(frame.MAXIMIZED_BOTH);
-           Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-           	frame.setSize((int)dimension.getWidth(), (int)dimension.getHeight()-30);
-   			frame.setLocationRelativeTo(null);
-   			frame.getContentPane().removeAll();
-   			frame.setContentPane(new PanelCreation());
-   			frame.repaint();
-   			frame.validate();
+           Frame.p.getListeNiveau().get(0).getGestionTexture().setImage("C:/Users/gonzo/Desktop/tilea2.bmp");
+           Frame.p.getListeNiveau().get(0).getGestionTexture().decouperImage();
+          
+           frame.setSize(400,500);
+			frame.setLocationRelativeTo(null);
+			frame.getContentPane().removeAll();
+	        frame.setContentPane(new PanelInfoTypeBlock());
+	        frame.repaint();
+	        frame.validate();
         }
      else{
     	 JOptionPane.showMessageDialog(this,"Veuillez entrer des chiffres");

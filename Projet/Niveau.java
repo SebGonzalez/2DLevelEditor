@@ -12,9 +12,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.TransferHandler;
@@ -65,6 +62,9 @@ public class Niveau implements Serializable{
 		this.nbCasey = nbcasey;
 	}
 	
+	public ArrayList<HashMap<Integer, JLabel>> getLignePlateau() {
+		return lignePlateau;
+	}
 
 	public String getFichierImage() {
 		return fichierImage;
@@ -103,13 +103,15 @@ public class Niveau implements Serializable{
 
             @Override
             public void mouseReleased(MouseEvent e) {
-            	LabelCustom jc = (LabelCustom)e.getSource();
-                System.out.println(" x : " + jc.getLigne());
-                System.out.println(" y : " + jc.getColonne());
+            	System.out.println("Kevin");
             }
 
             @Override
-            public void mouseEntered(MouseEvent e) {}
+            public void mouseEntered(MouseEvent e) {
+            	/*LabelCustom jc = (LabelCustom)e.getSource();
+            	System.out.println(" x : " + jc.getLigne());
+                System.out.println(" y : " + jc.getColonne());*/
+            }
 
             @Override
             public void mouseExited(MouseEvent e) {}

@@ -1,4 +1,6 @@
 package IHM;
+import gestionTexture.IconCustom;
+
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -15,6 +17,7 @@ import java.awt.event.MouseMotionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
@@ -38,6 +41,8 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 	JScrollPane scrollPane;
 	JScrollPane scrollPaneTexture;
 	boolean cliqueBarre = false;
+	
+	JLabel test;
 	
 	private Point lastPosition;
 	
@@ -131,7 +136,9 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == sauvegarder) {
+		
+		//KEVIN
+		/*if(e.getSource() == sauvegarder) {
 			JFileChooser fc = new JFileChooser();
 			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			//fc.addChoosableFileFilter(new FileNameExtensionFilter("Images", "bmp"));
@@ -141,9 +148,16 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 	    	{	
 				cheminSauvegarde=fc.getSelectedFile().getAbsolutePath();		
 				Memoire.save(Frame.p, cheminSauvegarde);
+	    	}*/
+		
+		if(e.getSource() == sauvegarder) {
+			JFileChooser fc = new JFileChooser();
+			fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
+	    	{	
+				cheminSauvegarde=fc.getSelectedFile().getAbsolutePath();		
+				Frame.p.export(cheminSauvegarde);
 	    	}
-			
-			
 		}	
 	}
 

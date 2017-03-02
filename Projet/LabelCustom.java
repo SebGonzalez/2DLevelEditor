@@ -1,11 +1,15 @@
 package Projet;
 
-import java.awt.Color;
-
 import javax.swing.JLabel;
 
 public class LabelCustom extends JLabel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	//PanelCreation
 	int ligne;
 	int colonne;
 	
