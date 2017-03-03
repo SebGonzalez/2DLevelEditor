@@ -99,19 +99,19 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
        	Font font = new Font("serial", Font.PLAIN, 17);
        	
        	menuSauvegarder.setFont(font);
-       	menuSauvegarder.setForeground(Color.white);
+       	menuSauvegarder.setForeground(Color.black);
        	menuSauvegarder.setBorder(BorderFactory.createEmptyBorder(0, 50, 0,50));
        	
        	menuAjoutern.setFont(font);
-       	menuAjoutern.setForeground(Color.white);
+       	menuAjoutern.setForeground(Color.black);
        	menuAjoutern.setBorder(BorderFactory.createEmptyBorder(0, 50, 0,50));
        	
        	menuSupprimern.setFont(font);
-       	menuSupprimern.setForeground(Color.white);
+       	menuSupprimern.setForeground(Color.black);
        	menuSupprimern.setBorder(BorderFactory.createEmptyBorder(0, 50, 0,50));
        	
        	menuExporter.setFont(font);
-       	menuExporter.setForeground(Color.white);
+       	menuExporter.setForeground(Color.black);
        	menuExporter.setBorder(BorderFactory.createEmptyBorder(0, 50, 0,50));//
        	//menuExporter.setBorder(BorderFactory.createBevelBorder (0, 1, 0,1, Color.GRAY));
        	
@@ -124,8 +124,8 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
         this.menuBar.add(menuExporter);
         
         
-        menuBar.setBounds(0,0,this.getWidth(),60);
-        menuBar.setBackground(new Color(43, 87, 154));
+        menuBar.setBounds(0,0,this.getWidth(),30);
+       // menuBar.setBackground(new Color(43, 87, 154));
         this.add(menuBar);
         
         /*JFrame frame = (JFrame)this.getTopLevelAncestor();
@@ -159,8 +159,8 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 			yCaseNiveau = (((this.getHeight()-200) - heightCaseNiveau) / 2) + 100;
 		}
 		else {
-			heightCaseNiveau = this.getHeight()-200;
-			yCaseNiveau = 100;
+			heightCaseNiveau = this.getHeight()-150;
+			yCaseNiveau = 50;
 		}
 		scrollPane.setBounds(xCaseNiveau, yCaseNiveau, widthCaseNiveau, heightCaseNiveau);
 		scrollPane.getViewport ().setScrollMode ( JViewport.SIMPLE_SCROLL_MODE );
@@ -180,12 +180,10 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 				repaint(); 
 			}
 		});
-		scrollPane.setBounds(xCaseNiveau, yCaseNiveau, widthCaseNiveau, heightCaseNiveau);
 		this.add(scrollPane);
 		
 		scrollPaneTexture=new JScrollPane(Frame.p.getListeNiveau().get(0).getGestionTexture().dessinerTile(this.getWidth(), this.getHeight())); 
-		scrollPaneTexture.setBounds(xBarre+30, 20, widthTexture, hauteurFrame-100);
-		scrollPaneTexture.setBounds(widthCaseNiveau+xCaseNiveau+60, 20, this.getWidth() - (widthCaseNiveau+xCaseNiveau+60)-30, this.getHeight()-100);
+		scrollPaneTexture.setBounds(widthCaseNiveau+xCaseNiveau+60, yCaseNiveau, this.getWidth() - (widthCaseNiveau+xCaseNiveau+60)-30,heightCaseNiveau);
 		scrollPaneTexture.getViewport ().setScrollMode ( JViewport.SIMPLE_SCROLL_MODE );
 		this.add(scrollPaneTexture);
 		
@@ -259,7 +257,7 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 				widthTexture += lastPosition.getX()-p.getX();
 				lastPosition = p;
 				scrollPane.setBounds(xCaseNiveau, yCaseNiveau, widthCaseNiveau, heightCaseNiveau);
-				scrollPaneTexture.setBounds(xBarre+30, 20, widthTexture, hauteurFrame-100);
+				scrollPaneTexture.setBounds(widthCaseNiveau+xCaseNiveau+60, yCaseNiveau, this.getWidth() - (widthCaseNiveau+xCaseNiveau+60)-30,heightCaseNiveau);
 			}
 			else {
 				xBarre = e.getX();
@@ -267,7 +265,7 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 				widthTexture -= Math.abs(lastPosition.getX()-p.getX());
 				lastPosition = p;
 				scrollPane.setBounds(xCaseNiveau, yCaseNiveau, widthCaseNiveau, heightCaseNiveau);
-				scrollPaneTexture.setBounds(xBarre+30, 20, widthTexture, hauteurFrame-100);
+				scrollPaneTexture.setBounds(widthCaseNiveau+xCaseNiveau+60, yCaseNiveau, this.getWidth() - (widthCaseNiveau+xCaseNiveau+60)-30,heightCaseNiveau);
 			}
 			repaint();
 			scrollPane.revalidate();

@@ -4,14 +4,20 @@ import gestionTexture.IconCustom;
 import gestionTexture.LabelCustomTexture;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -22,7 +28,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
-public class PanelSelectionTexture extends JPanel{
+public class PanelSelectionTexture extends JPanel implements KeyListener{
 	
 	public JButton valider;
 	ArrayList<Integer> choixTexture = new ArrayList<Integer>();
@@ -31,6 +37,8 @@ public class PanelSelectionTexture extends JPanel{
 	int compteurTexture = 1;
 	JPanel texture;
 	ArrayList<LabelCustomTexture> listeJLabel = new ArrayList<LabelCustomTexture>();
+	boolean click = false;
+	boolean shift = false;
 	
 	public PanelSelectionTexture() {
 		
@@ -73,6 +81,26 @@ public class PanelSelectionTexture extends JPanel{
        	this.add(valider);
        	
        	initPanelTexture();
+       	addKeyListener(this);
+       	this.setFocusable(true);
+       	this.requestFocusInWindow();
+       	this.setVisible(true);
+       	//this.setFocusable(true);
+       	
+       	KeyboardFocusManager focusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+       	focusManager.addPropertyChangeListener(
+       	    new PropertyChangeListener() {
+       	        public void propertyChange(PropertyChangeEvent e) {
+       	            String properties = e.getPropertyName();
+       	            if (("focusOwner".equals(properties)) && (e.getNewValue() != null)) {
+       	                Component component = (Component)e.getNewValue();
+       	                String name = component.getName();
+       	 
+       	               	System.out.println(name + " a pris le focus");
+       	            }
+       	        }
+       	    }
+       	);
 		
 	}
 	
@@ -85,13 +113,13 @@ public class PanelSelectionTexture extends JPanel{
 
             @Override
             public void mousePressed(MouseEvent e) {
+            	click = true;
             	LabelCustomTexture j = (LabelCustomTexture) e.getSource();
             	if(j.isEnabled()) {
 	            	if(!j.isEstCoche()) {
 	            		j.setBorder(BorderFactory.createMatteBorder( 5, 5, 5, 5, Color.red));
 	            	}
 	            	else {
-	            		System.out.println("oui");
 	            		j.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 	            	}
             	}
@@ -105,15 +133,30 @@ public class PanelSelectionTexture extends JPanel{
             }
             @Override
             public void mouseReleased(MouseEvent e) {
-            	
+            	click = false;
             }
             @Override
-            public void mouseEntered(MouseEvent e) {}
+            public void mouseEntered(MouseEvent e) {
+            	if(click == true) {
+            		LabelCustomTexture j = (LabelCustomTexture) e.getSource();
+                	if(j.isEnabled()) {
+    	            	if(!j.isEstCoche()) {
+    	            		j.setBorder(BorderFactory.createMatteBorder( 5, 5, 5, 5, Color.red));
+    	            	}
+    	            	else {
+    	            		j.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+    	            	}
+                	}
+                	else {
+                		JOptionPane.showMessageDialog(PanelSelectionTexture.this.getTopLevelAncestor(), "La texture a déjà été associé à un type");
+                	}
+                	j.modifSelection();
+            	}
+            }
             @Override
             public void mouseExited(MouseEvent e) {}
         };
-        
-        
+              
         int hauteur = (this.getWidth()-100)/Frame.p.getListeNiveau().get(0).getGestionTexture().getNbLigne();
         int hauteurH = (this.getHeight()-100)/Frame.p.getListeNiveau().get(0).getGestionTexture().getNbColonne();
         System.out.println(hauteur + " "+hauteurH);
@@ -121,6 +164,8 @@ public class PanelSelectionTexture extends JPanel{
 		for(int i=0; i<Frame.p.getListeNiveau().get(0).getGestionTexture().listeTileTexture.size(); i++) {
 			LabelCustomTexture p = new LabelCustomTexture(i);
 			p.addMouseListener(ml);
+			p.addKeyListener(this);
+			//p.addMouseMotionListener(mm);
 			p.setMinimumSize(new Dimension(hauteur, hauteurH));
 			p.setPreferredSize(new Dimension(hauteur, hauteurH));
 			p.setIcon(new IconCustom(Frame.p.getListeNiveau().get(0).getGestionTexture().listeTileTexture.get(i).getScaledInstance(hauteur, hauteurH, Image.SCALE_DEFAULT),i));
@@ -142,4 +187,27 @@ public class PanelSelectionTexture extends JPanel{
 			}
 		}
 	}
+
+	@Override
+	public void keyTyped(KeyEvent paramKeyEvent) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		//System.out.println(e);
+		//System.out.println(e.getKeyCode());
+		if(e.getKeyCode() == 16) {
+			System.out.println("oui");
+		}
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent paramKeyEvent) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -1,8 +1,7 @@
 package IHM;
 
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
+import javax.swing.UIManager;
 
 import Projet.Projet;
 
@@ -18,26 +17,22 @@ public class Frame extends JFrame {
 	
 	public Frame() {
 		this.setSize(500, 200);
+		setBestLookAndFeelAvailable();
 		this.setContentPane(new PanelPrincipal());
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		//this.setUndecorated(true);
-		
-/*---------------------------------------------------Menu-------------------------------------------------------- */ 	
-     
-      	
-       	//this.menuBar.add(menu1);
-       // this.menuBar.add(menu2);
-        //this.setJMenuBar(menuBar);
-        
-        /*JFrame frame = (JFrame)this.getTopLevelAncestor();
-        frame.setJMenuBar(menuBar);	*/
-       	
-       	
-  /*---------------------------------------------------Menu---------------------------------------------------------*/ 
-		
 		this.setVisible(true);
 	}
+	
+	 public static void setBestLookAndFeelAvailable(){
+		 
+		       try {
+		           UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+		       }catch (Exception e) {}
+		 
+		   //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		 }
+	 
 	
 	public static void main(String[] args) {
 		Frame f = new Frame();
