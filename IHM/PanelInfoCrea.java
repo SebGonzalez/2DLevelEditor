@@ -122,10 +122,10 @@ public void actionPerformed(ActionEvent e) {
            Frame.p.ajouterNiveau(n);
            Frame.p.getListeNiveau().get(0).getGestionTexture().setNbColonne(nbdc);
            Frame.p.getListeNiveau().get(0).getGestionTexture().setNbLigne(nbdl);
-           Frame.p.getListeNiveau().get(0).getGestionTexture().setImage("C:/Users/gonzo/Desktop/tilea2.bmp");
+           Frame.p.getListeNiveau().get(0).getGestionTexture().setImage(pathsource);
            Frame.p.getListeNiveau().get(0).getGestionTexture().decouperImage();
           
-           frame.setSize(400,500);
+           	frame.setSize(400,500);
 			frame.setLocationRelativeTo(null);
 			frame.getContentPane().removeAll();
 	        frame.setContentPane(new PanelInfoTypeBlock());
