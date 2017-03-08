@@ -53,7 +53,11 @@ public class Projet implements Serializable{
 					writer.newLine();
 					writer.write(listeNiveau.get(i).getGestionTexture().getNbLigne() +" " + listeNiveau.get(i).getGestionTexture().getNbColonne());
 					writer.newLine();
-					//A mettre type de block
+					
+					for(int z=0; z<listeNiveau.get(i).getGestionTexture().getListeTypeBlock().size(); i++) {
+						writer.write(listeNiveau.get(i).getGestionTexture().getListeTypeBlock().get(i));
+						writer.newLine();
+					}
 					
 					for(int y=0; y<listeNiveau.get(i).getNbcasey(); y++) {
 						for(int w=0; w<listeNiveau.get(i).getNbcasex(); w++) {

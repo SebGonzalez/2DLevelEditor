@@ -1,6 +1,4 @@
 package IHM;
-import gestionTexture.IconCustom;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -18,21 +16,13 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JViewport;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
-
-import Projet.Memoire;
 
 public class PanelCreation extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
 	
@@ -115,7 +105,44 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
        	menuExporter.setBorder(BorderFactory.createEmptyBorder(0, 50, 0,50));//
        	//menuExporter.setBorder(BorderFactory.createBevelBorder (0, 1, 0,1, Color.GRAY));
        	
-       	menuSauvegarder.addMenuListener(new SampleMenuListener());
+       	menuExporter.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				
+				JFileChooser fc = new JFileChooser();
+				fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
+		    	{	
+					cheminSauvegarde=fc.getSelectedFile().getAbsolutePath();		
+					Frame.p.export(cheminSauvegarde);
+		    	}
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
        	
        	this.menuBar.add(menuAjoutern);
        	//this.menuBar.add(new JSeparator(JSeparator.VERTICAL),"growy");
@@ -284,36 +311,5 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 		else {
 			setCursor(Cursor.getDefaultCursor());
 		}
-	}
-	
-	class SampleMenuListener implements MenuListener {
-
-	    @Override
-	    public void menuSelected(MenuEvent e) {
-	    	if(e.getSource() == menuSauvegarder) {
-				JFileChooser fc = new JFileChooser();
-				fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				//fc.addChoosableFileFilter(new FileNameExtensionFilter("Images", "bmp"));
-				//fc.setFileFilter(new FileNameExtensionFilter("Images (bmp, jpg, png)", "bmp", "jpg", "png"));
-				//int returnVal = fc.showOpenDialog(this);
-				if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
-		    	{	
-					cheminSauvegarde=fc.getSelectedFile().getAbsolutePath();		
-					Memoire.save(Frame.p, cheminSauvegarde);
-		    	}
-				
-				
-			}
-	    }
-
-	    @Override
-	    public void menuDeselected(MenuEvent e) {
-	        System.out.println("menuDeselected");
-	    }
-
-	    @Override
-	    public void menuCanceled(MenuEvent e) {
-	        System.out.println("menuCanceled");
-	    }
 	}
 }

@@ -63,6 +63,10 @@ public class GestionTexture implements Serializable{
 		return image;
 	}
 	
+	public ArrayList<String> getListeTypeBlock() {
+		return listeTypeBlock;
+	}
+
 	//associe un type à une texture
 	public void ajouterTypeTexture(String type, int idTexture) {
 		typeTexture[idTexture] = type;
