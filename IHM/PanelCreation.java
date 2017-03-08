@@ -125,7 +125,8 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
         
         
         menuBar.setBounds(0,0,this.getWidth(),30);
-        menuBar.setBackground(Color.BLUE);
+       // menuBar.setBackground(Color.BLUE);
+        menuBar.setBackground(new Color(43, 87, 154));
         this.add(menuBar);
         
         /*JFrame frame = (JFrame)this.getTopLevelAncestor();
