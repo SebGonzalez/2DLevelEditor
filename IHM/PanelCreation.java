@@ -34,7 +34,7 @@ import javax.swing.event.MenuListener;
 
 import Projet.Memoire;
 
-public class PanelCreation extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
+public class PanelCreation extends JPanel implements ActionListener, MouseListener, MouseMotionListener, MenuListener {
 	
 	private JMenuBar menuBar = new JMenuBar();
 	private JMenu menuSauvegarder = new JMenu("Sauvegarder");
@@ -115,7 +115,8 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
        	menuExporter.setBorder(BorderFactory.createEmptyBorder(0, 50, 0,50));//
        	//menuExporter.setBorder(BorderFactory.createBevelBorder (0, 1, 0,1, Color.GRAY));
        	
-       	menuSauvegarder.addMenuListener(new SampleMenuListener());
+       	menuSauvegarder.addActionListener(this);
+       	menuExporter.addMenuListener(this);
        	
        	this.menuBar.add(menuAjoutern);
        	//this.menuBar.add(new JSeparator(JSeparator.VERTICAL),"growy");
@@ -285,35 +286,45 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 			setCursor(Cursor.getDefaultCursor());
 		}
 	}
-	
-	class SampleMenuListener implements MenuListener {
-
-	    @Override
-	    public void menuSelected(MenuEvent e) {
-	    	if(e.getSource() == menuSauvegarder) {
-				JFileChooser fc = new JFileChooser();
-				fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				//fc.addChoosableFileFilter(new FileNameExtensionFilter("Images", "bmp"));
-				//fc.setFileFilter(new FileNameExtensionFilter("Images (bmp, jpg, png)", "bmp", "jpg", "png"));
-				//int returnVal = fc.showOpenDialog(this);
-				if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
-		    	{	
-					cheminSauvegarde=fc.getSelectedFile().getAbsolutePath();		
-					Memoire.save(Frame.p, cheminSauvegarde);
-		    	}
-				
-				
-			}
-	    }
-
-	    @Override
-	    public void menuDeselected(MenuEvent e) {
-	        System.out.println("menuDeselected");
-	    }
-
-	    @Override
-	    public void menuCanceled(MenuEvent e) {
-	        System.out.println("menuCanceled");
-	    }
+/*--------------------------------------------------------MENU-------------------------------------------------------------------------------------*/
+	@Override
+	public void menuCanceled(MenuEvent e) {
+		System.out.println("cancel");
+		
 	}
+
+	@Override
+	public void menuDeselected(MenuEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("deselcted");
+	}
+
+	@Override
+	public void menuSelected(MenuEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("selected");
+		if(e.getSource() == menuSauvegarder) {
+			JFileChooser fc = new JFileChooser();
+			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+			//fc.addChoosableFileFilter(new FileNameExtensionFilter("Images", "bmp"));
+			//fc.setFileFilter(new FileNameExtensionFilter("Images (bmp, jpg, png)", "bmp", "jpg", "png"));
+			//int returnVal = fc.showOpenDialog(this);
+			if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
+	    	{	
+				cheminSauvegarde=fc.getSelectedFile().getAbsolutePath();		
+				Memoire.save(Frame.p, cheminSauvegarde);
+	    	}
+		}
+		
+		if(e.getSource() == menuExporter) {
+			JFileChooser fc = new JFileChooser();
+			fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
+	    	{	
+				cheminSauvegarde=fc.getSelectedFile().getAbsolutePath();		
+				Frame.p.export(cheminSauvegarde);
+	    	}
+		}
+	}
+/*--------------------------------------------------------MENU-------------------------------------------------------------------------------------*/
 }
