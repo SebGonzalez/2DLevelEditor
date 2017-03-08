@@ -13,14 +13,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.TransferHandler;
 
+import dragAndDrop.MouseGlassListener;
+import dragAndDrop.MouseGlassMotionListener;
+import dragAndDrop.MyGlassPane;
+import IHM.Frame;
 import Projet.Projet;
 
 public class GestionTexture implements Serializable{
@@ -36,6 +36,7 @@ public class GestionTexture implements Serializable{
 		listeTileTexture = new ArrayList<Image>();
 		listeTypeBlock = new ArrayList<String>();
 		typeTexture = new String[listeTileTexture.size()];
+		
 	}
 	
 	public int getNbLigne() {
@@ -165,12 +166,12 @@ public class GestionTexture implements Serializable{
         int hauteur = height/8 - 34;
 		
 		for(int i=0; i<listeTileTexture.size(); i++) {
-			LabelCustomTexture p = new LabelCustomTexture(i);
-			p.addMouseListener(ml);
-			//p.addMouseMotionListener(mm);
 			
-			//p.setBounds(300,300,100,100);
-			//p.setBounds(width-(hauteur+30), ((hauteur+20)*i) + 50, hauteur, hauteur);
+			LabelCustomTexture p = new LabelCustomTexture(i);
+			p.addMouseListener(new MouseGlassListener(Frame.glass));
+		    p.addMouseMotionListener(new MouseGlassMotionListener(Frame.glass));
+			//p.addMouseListener(ml);
+			
 			p.setSize(hauteur, hauteur);
 			//p.setPreferredSize(new Dimension(hauteur, hauteur));
 			p.setTransferHandler(new TransferHandler("icon"));

@@ -3,6 +3,7 @@ package IHM;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
+import dragAndDrop.MyGlassPane;
 import Projet.Projet;
 
 public class Frame extends JFrame {
@@ -13,15 +14,19 @@ public class Frame extends JFrame {
 	private JMenu menu1 = new JMenu("Fichier");
 	private JMenu menu2 = new JMenu("Sous ficher");
 	private JMenu menu3 = new JMenu("Edition");*/
-
+	public static MyGlassPane glass = new MyGlassPane();
 	
 	public Frame() {
+		
+		setGlassPane(glass);
+		
 		this.setSize(500, 200);
 		setBestLookAndFeelAvailable();
 		this.setContentPane(new PanelPrincipal());
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
+		
 	}
 	
 	 public static void setBestLookAndFeelAvailable(){

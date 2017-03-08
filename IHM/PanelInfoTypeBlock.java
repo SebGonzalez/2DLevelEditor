@@ -45,8 +45,8 @@ public class PanelInfoTypeBlock extends JPanel implements ActionListener {
 		gbc2.weighty = 1;
 		
 		JTextField champ1 = new JTextField("");
-		champ1.setPreferredSize(new Dimension(200, 20));
-		champ1.setMinimumSize(new Dimension(200, 20));
+		champ1.setPreferredSize(new Dimension(200, 30));
+		champ1.setMinimumSize(new Dimension(200, 30));
 		this.add(champ1, gbc2);
 		listeTextField.add(champ1);
 		
