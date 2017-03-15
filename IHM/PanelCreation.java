@@ -15,7 +15,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -24,6 +26,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JViewport;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.xml.ws.handler.MessageContext.Scope;
 
 import Projet.Memoire;
 
@@ -53,6 +58,7 @@ public class PanelCreation extends JPanel implements MouseListener, MouseMotionL
 	int xBarre;
 	
 	private JTabbedPane pane;
+	private JTabbedPane paneTexture;
 	JScrollPane scrollPane;
 	JScrollPane scrollPaneTexture;
 	boolean cliqueBarre = false;
@@ -182,7 +188,26 @@ public class PanelCreation extends JPanel implements MouseListener, MouseMotionL
 		nomniveaux++;
 		pane.add("Niveau 1", scrollPane);
 		pane.setBounds(xCaseNiveau, yCaseNiveau, widthCaseNiveau, heightCaseNiveau);
+		pane.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent paramChangeEvent) {
+				paneTexture.setSelectedIndex(pane.getSelectedIndex());
+			}
+		});
 		this.add(pane);
+		
+		paneTexture=new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+		paneTexture.add("Niveau 1", scrollPaneTexture);
+		paneTexture.setBounds(widthCaseNiveau+xCaseNiveau+60, yCaseNiveau, this.getWidth() - (widthCaseNiveau+xCaseNiveau+60)-30,heightCaseNiveau);
+		paneTexture.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent paramChangeEvent) {
+				pane.setSelectedIndex(paneTexture.getSelectedIndex());
+			}
+		});
+		this.add(paneTexture);
 	}
 
 	public void paintComponent(Graphics g) { 
@@ -204,37 +229,25 @@ public class PanelCreation extends JPanel implements MouseListener, MouseMotionL
 	public void mousePressed(MouseEvent e) {
 		 if(e.getSource() == menuAjoutern){
 			JScrollPane scrollpane;
+			JScrollPane scrollPaneTexture;
+			
 			nomniveaux++;
 			
-			Frame p = new Frame();
+			/*Frame p = new Frame();
 			p.setContentPane(new PanelInfoCrea());
-			p.setVisible(true);
+			p.setVisible(true);*/
 			
-			/*Thread t = new Thread(new Runnable() {
-				
-				@Override
-				public void run() {
-					Frame p = new Frame();
-					p.setContentPane(new PanelInfoCrea());
-					p.setVisible(true);
-					
-				}
-			});
-			t.start();
+			JFrame frame =  (JFrame) this.getTopLevelAncestor();
+			JDialog j = new JDialog(frame, true);
+			j.add(new PanelInfoCrea());
+			j.setSize(500,300);
+			j.setVisible(true);
 			
-			
-			Frame.creation = true;
-			while(Frame.creation) {
-				try {
-					System.out.println("oui");
-					Thread.sleep(1);
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}*/
 			scrollpane = new JScrollPane(Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).dessinerPlateauCreation(this.getWidth(), this.getHeight(), hauteur));
-			pane.add("niveau "+nomniveaux ,scrollpane);
+			pane.add("Niveau "+nomniveaux ,scrollpane);
+			
+			scrollPaneTexture=new JScrollPane(Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().dessinerTile(this.getWidth(), this.getHeight())); 
+			paneTexture.add("Niveau " + nomniveaux, scrollPaneTexture);
 		}
 		 else if(e.getSource() == menuSauvegarder) {
 			JFileChooser fc = new JFileChooser();
@@ -281,7 +294,7 @@ public class PanelCreation extends JPanel implements MouseListener, MouseMotionL
 				widthTexture += lastPosition.getX()-p.getX();
 				lastPosition = p;
 				pane.setBounds(xCaseNiveau, yCaseNiveau, widthCaseNiveau, heightCaseNiveau);
-				scrollPaneTexture.setBounds(widthCaseNiveau+xCaseNiveau+60, yCaseNiveau, this.getWidth() - (widthCaseNiveau+xCaseNiveau+60)-30,heightCaseNiveau);
+				paneTexture.setBounds(widthCaseNiveau+xCaseNiveau+60, yCaseNiveau, this.getWidth() - (widthCaseNiveau+xCaseNiveau+60)-30,heightCaseNiveau);
 			}
 			
 			else {
@@ -290,7 +303,7 @@ public class PanelCreation extends JPanel implements MouseListener, MouseMotionL
 				widthTexture -= Math.abs(lastPosition.getX()-p.getX());
 				lastPosition = p;
 				pane.setBounds(xCaseNiveau, yCaseNiveau, widthCaseNiveau, heightCaseNiveau);
-				scrollPaneTexture.setBounds(widthCaseNiveau+xCaseNiveau+60, yCaseNiveau, this.getWidth() - (widthCaseNiveau+xCaseNiveau+60)-30,heightCaseNiveau);
+				paneTexture.setBounds(widthCaseNiveau+xCaseNiveau+60, yCaseNiveau, this.getWidth() - (widthCaseNiveau+xCaseNiveau+60)-30,heightCaseNiveau);
 			}
 			pane.revalidate();
 			scrollPane.revalidate();

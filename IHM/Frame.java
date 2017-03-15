@@ -1,10 +1,13 @@
 package IHM;
 
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
-import dragAndDrop.MyGlassPane;
 import Projet.Projet;
+import dragAndDrop.MyGlassPane;
 
 public class Frame extends JFrame {
 
@@ -26,7 +29,13 @@ public class Frame extends JFrame {
 		this.setContentPane(new PanelPrincipal());
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setTitle("2D Level Editor");
+		this.setTitle("Level Editor");
+
+        try {
+            this.setIconImage(ImageIO.read(getClass().getResourceAsStream("../logo.png")));
+        } catch (IOException e) {
+        }
+        
 		this.setVisible(true);
 	}
 	

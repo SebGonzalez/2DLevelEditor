@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -82,8 +83,15 @@ public class PanelSelectionTexture extends JPanel implements KeyListener{
 							Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().typeTexture[listeJLabel.get(i).getId()] = typeBlock;
 						}
 					}
-					JFrame frame =  (JFrame)PanelSelectionTexture.this.getTopLevelAncestor();
-					if(Frame.p.getListeNiveau().size() == 1) {
+					JFrame frame = null;
+					JDialog dialog = null;
+
+					if(PanelSelectionTexture.this.getTopLevelAncestor().getClass().toString().equals("class IHM.Frame"))
+						 frame =  (JFrame) PanelSelectionTexture.this.getTopLevelAncestor();
+					else
+						dialog =  (JDialog) PanelSelectionTexture.this.getTopLevelAncestor();
+					
+					if(Frame.p.getListeNiveau().size() == 1 && frame != null) {
 						Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 				        frame.setSize((int)dimension.getWidth(), (int)dimension.getHeight()-40);
 				   		frame.setLocationRelativeTo(null);
@@ -92,9 +100,8 @@ public class PanelSelectionTexture extends JPanel implements KeyListener{
 				   		frame.repaint();
 				   		frame.validate();
 					}
-					else {
-						Frame.creation = false;
-						frame.dispose();
+					else if(dialog != null) {
+						dialog.dispose();
 					}
 				}
 			}

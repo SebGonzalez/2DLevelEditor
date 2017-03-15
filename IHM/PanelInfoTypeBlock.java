@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -85,8 +86,16 @@ public class PanelInfoTypeBlock extends JPanel implements ActionListener {
 			this.revalidate();
 		}
 		else if(e.getSource() == valider) {
-			JFrame frame =  (JFrame) this.getTopLevelAncestor();
-			if(Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setListeTypeBlock(listeTextField)) {
+			
+			JFrame frame = null;
+			JDialog dialog = null;
+
+			if(this.getTopLevelAncestor().getClass().toString().equals("class IHM.Frame"))
+				 frame =  (JFrame) this.getTopLevelAncestor();
+			else
+				dialog =  (JDialog) this.getTopLevelAncestor();
+			
+			if(Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setListeTypeBlock(listeTextField) && frame != null) {
 				Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		        frame.setSize((int)dimension.getWidth(), (int)dimension.getHeight()-40);
 		   		frame.setLocationRelativeTo(null);
@@ -94,6 +103,15 @@ public class PanelInfoTypeBlock extends JPanel implements ActionListener {
 		   		frame.setContentPane(new PanelSelectionTexture());
 		   		frame.repaint();
 		   		frame.validate();
+			}
+			else if(Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setListeTypeBlock(listeTextField) && dialog != null) {
+				Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+		        dialog.setSize((int)dimension.getWidth(), (int)dimension.getHeight()-40);
+		   		dialog.setLocationRelativeTo(null);
+		   		dialog.getContentPane().removeAll();
+		   		dialog.setContentPane(new PanelSelectionTexture());
+		   		dialog.repaint();
+		   		dialog.validate();
 			}
 			else {
 				JOptionPane.showMessageDialog(frame, "Veuillez remplir au moins un champ !");

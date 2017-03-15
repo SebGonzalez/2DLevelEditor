@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -108,36 +109,65 @@ public boolean estUnEntier(String chaine) {
 
 @Override
 public void actionPerformed(ActionEvent e) {
-	JFrame frame =  (JFrame) this.getTopLevelAncestor();
+	
+	JFrame frame = null;
+	JDialog dialog = null;
+
+	if(this.getTopLevelAncestor().getClass().toString().equals("class IHM.Frame"))
+		 frame =  (JFrame) this.getTopLevelAncestor();
+	else
+		dialog =  (JDialog) this.getTopLevelAncestor();
     
-	if(e.getSource() == validation) {
+	if(e.getSource() == validation && frame != null) {
 		
-     if (estUnEntier(tftaillex.getText())&& estUnEntier(tftailley.getText())&& estUnEntier(tfnombredec.getText())){
-    	 
-    	   int x= Integer.parseInt(tftaillex.getText());
-           int y= Integer.parseInt(tftailley.getText());
-           int nbdc=Integer.parseInt(tfnombredec.getText());
-           int nbdl=Integer.parseInt(tfnombreLigne.getText());
-           Niveau n = new Niveau(x,y);
-           Frame.p.ajouterNiveau(n);
-           Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setNbColonne(nbdc);
-           Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setNbLigne(nbdl);
-           Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setImage("C:/Users/gonzo/Desktop/tilea2.png");
-           Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().decouperImage();
+		if (estUnEntier(tftaillex.getText())&& estUnEntier(tftailley.getText())&& estUnEntier(tfnombredec.getText())){
+			int x= Integer.parseInt(tftaillex.getText());
+			int y= Integer.parseInt(tftailley.getText());
+			int nbdc=Integer.parseInt(tfnombredec.getText());
+			int nbdl=Integer.parseInt(tfnombreLigne.getText());
+			Niveau n = new Niveau(x,y);
+			Frame.p.ajouterNiveau(n);
+			Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setNbColonne(nbdc);
+			Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setNbLigne(nbdl);
+			Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setImage("C:/Users/gonzo/Desktop/tilea2.png");
+			Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().decouperImage();
           
-           	frame.setSize(400,500);
+			frame.setSize(400,500);
 			frame.setLocationRelativeTo(null);
-			frame.getContentPane().removeAll();
-	        frame.setContentPane(new PanelInfoTypeBlock());
-	        frame.repaint();
-	        frame.validate();
+           	frame.getContentPane().removeAll();
+           	frame.setContentPane(new PanelInfoTypeBlock());
+           	frame.repaint();
+           	frame.validate();
         }
      else{
     	 JOptionPane.showMessageDialog(this,"Veuillez entrer des chiffres");
      }
-      
-       
-}
+	}
+	else if(e.getSource() == validation && dialog != null) {
+		
+		if (estUnEntier(tftaillex.getText())&& estUnEntier(tftailley.getText())&& estUnEntier(tfnombredec.getText())){
+			int x= Integer.parseInt(tftaillex.getText());
+			int y= Integer.parseInt(tftailley.getText());
+			int nbdc=Integer.parseInt(tfnombredec.getText());
+			int nbdl=Integer.parseInt(tfnombreLigne.getText());
+			Niveau n = new Niveau(x,y);
+			Frame.p.ajouterNiveau(n);
+			Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setNbColonne(nbdc);
+			Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setNbLigne(nbdl);
+			Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setImage("C:/Users/gonzo/Desktop/tilea2.png");
+			Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().decouperImage();
+          
+			dialog.setSize(400,500);
+			dialog.setLocationRelativeTo(null);
+			dialog.getContentPane().removeAll();
+			dialog.setContentPane(new PanelInfoTypeBlock());
+			dialog.repaint();
+			dialog.validate();
+        }
+     else{
+    	 JOptionPane.showMessageDialog(this,"Veuillez entrer des chiffres");
+     }
+	}
 	else if(e.getSource() == chemin){
 		JFileChooser fc = new JFileChooser();
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
