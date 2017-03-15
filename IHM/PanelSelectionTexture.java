@@ -46,7 +46,7 @@ public class PanelSelectionTexture extends JPanel implements KeyListener{
 		Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
        	this.setSize((int)dimension.getWidth(), (int)dimension.getHeight());;
        	
-       	typeBlock = Frame.p.getListeNiveau().get(0).getGestionTexture().listeTypeBlock.get(0);
+       	typeBlock = Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().listeTypeBlock.get(0);
        	JLabel labelSelection = new JLabel("Sélectionner toute les texture de type : " + typeBlock + " (cliquer sur valider ensuite)");
        	labelSelection.setBounds(10,10,900,25);
        	labelSelection.setFont(new Font(Font.SANS_SERIF, Font.ITALIC, 25));
@@ -58,8 +58,17 @@ public class PanelSelectionTexture extends JPanel implements KeyListener{
        		
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(compteurTexture < Frame.p.getListeNiveau().get(0).getGestionTexture().listeTypeBlock.size()) {
-					typeBlock = Frame.p.getListeNiveau().get(0).getGestionTexture().listeTypeBlock.get(compteurTexture);
+				if(compteurTexture < Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().listeTypeBlock.size()) {
+					
+					for(int i=0; i<listeJLabel.size(); i++) {
+						if(listeJLabel.get(i).isEstCoche()) {
+							System.out.println("id : " + listeJLabel.get(i).getId());
+							System.out.println("taille : " + Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().typeTexture.length);
+							Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().typeTexture[listeJLabel.get(i).getId()] = typeBlock;
+						}
+					}
+					
+					typeBlock = Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().listeTypeBlock.get(compteurTexture);
 					labelSelection.setText("Sélectionner toute les texture de type : " + typeBlock + " (cliquer sur valider ensuite)");
 					compteurTexture++;
 					resetBorder();
@@ -67,14 +76,26 @@ public class PanelSelectionTexture extends JPanel implements KeyListener{
 					revalidate();
 				}
 				else {
+					
+					for(int i=0; i<listeJLabel.size(); i++) {
+						if(listeJLabel.get(i).isEstCoche()) {
+							Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().typeTexture[listeJLabel.get(i).getId()] = typeBlock;
+						}
+					}
 					JFrame frame =  (JFrame)PanelSelectionTexture.this.getTopLevelAncestor();
-					Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-			        frame.setSize((int)dimension.getWidth(), (int)dimension.getHeight()-40);
-			   		frame.setLocationRelativeTo(null);
-			   		frame.getContentPane().removeAll();
-			   		frame.setContentPane(new PanelCreation());
-			   		frame.repaint();
-			   		frame.validate();
+					if(Frame.p.getListeNiveau().size() == 1) {
+						Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+				        frame.setSize((int)dimension.getWidth(), (int)dimension.getHeight()-40);
+				   		frame.setLocationRelativeTo(null);
+				   		frame.getContentPane().removeAll();
+				   		frame.setContentPane(new PanelCreation());
+				   		frame.repaint();
+				   		frame.validate();
+					}
+					else {
+						Frame.creation = false;
+						frame.dispose();
+					}
 				}
 			}
 		});
@@ -106,7 +127,7 @@ public class PanelSelectionTexture extends JPanel implements KeyListener{
 	
 	public void initPanelTexture() {
 		texture = new JPanel();
-       	texture.setLayout(new GridLayout(Frame.p.getListeNiveau().get(0).getGestionTexture().getNbLigne(), Frame.p.getListeNiveau().get(0).getGestionTexture().getNbColonne()));
+       	texture.setLayout(new GridLayout(Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().getNbLigne(), Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().getNbColonne()));
 		texture.setBounds(50,50,this.getWidth()-100, this.getHeight()-100);
        	
        	MouseListener ml = new MouseListener() {
@@ -142,6 +163,7 @@ public class PanelSelectionTexture extends JPanel implements KeyListener{
                 	if(j.isEnabled()) {
     	            	if(!j.isEstCoche()) {
     	            		j.setBorder(BorderFactory.createMatteBorder( 5, 5, 5, 5, Color.red));
+    	            		j.setForeground(Color.BLACK);
     	            	}
     	            	else {
     	            		j.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
@@ -157,18 +179,18 @@ public class PanelSelectionTexture extends JPanel implements KeyListener{
             public void mouseExited(MouseEvent e) {}
         };
               
-        int hauteur = (this.getWidth()-100)/Frame.p.getListeNiveau().get(0).getGestionTexture().getNbLigne();
-        int hauteurH = (this.getHeight()-100)/Frame.p.getListeNiveau().get(0).getGestionTexture().getNbColonne();
+        int hauteur = (this.getWidth()-100)/Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().getNbLigne();
+        int hauteurH = (this.getHeight()-100)/Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().getNbColonne();
         System.out.println(hauteur + " "+hauteurH);
 		
-		for(int i=0; i<Frame.p.getListeNiveau().get(0).getGestionTexture().listeTileTexture.size(); i++) {
+		for(int i=0; i<Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().listeTileTexture.size(); i++) {
 			LabelCustomTexture p = new LabelCustomTexture(i);
 			p.addMouseListener(ml);
 			p.addKeyListener(this);
 			//p.addMouseMotionListener(mm);
 			p.setMinimumSize(new Dimension(hauteur, hauteurH));
 			p.setPreferredSize(new Dimension(hauteur, hauteurH));
-			p.setIcon(new IconCustom(Frame.p.getListeNiveau().get(0).getGestionTexture().listeTileTexture.get(i).getScaledInstance(hauteur, hauteurH, Image.SCALE_DEFAULT),i));
+			p.setIcon(new IconCustom(Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().listeTileTexture.get(i).getScaledInstance(hauteur, hauteurH, Image.SCALE_DEFAULT),i));
 			p.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 			p.setOpaque(true);
 			p.setVisible(true);
@@ -184,6 +206,7 @@ public class PanelSelectionTexture extends JPanel implements KeyListener{
 			if(listeJLabel.get(i).isEstCoche()) {
 				listeJLabel.get(i).setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 				listeJLabel.get(i).setEnabled(false);
+				listeJLabel.get(i).modifSelection();
 			}
 		}
 	}

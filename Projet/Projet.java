@@ -43,7 +43,7 @@ public class Projet implements Serializable{
 			for(int i=0; i<listeNiveau.size(); i++) {
 	
 				try {
-					File imagesrc = new File(listeNiveau.get(i).getGestionTexture().getImage());
+					File imagesrc = new File(listeNiveau.get(0).getGestionTexture().getImage());
 					File imagedest = new File(chemin + "/" + imagesrc.getName());
 					System.out.println(imagesrc.getName());
 					copyFile(imagesrc,imagedest);
@@ -51,11 +51,11 @@ public class Projet implements Serializable{
 					BufferedWriter writer = new BufferedWriter(new FileWriter(new File(chemin + "/niveau" + i + ".txt")));
 					writer.write(imagesrc.getName());
 					writer.newLine();
-					writer.write(listeNiveau.get(i).getGestionTexture().getNbLigne() +" " + listeNiveau.get(i).getGestionTexture().getNbColonne());
+					writer.write(listeNiveau.get(0).getGestionTexture().getNbLigne() +" " + listeNiveau.get(0).getGestionTexture().getNbColonne());
 					writer.newLine();
 					
-					for(int z=0; z<listeNiveau.get(i).getGestionTexture().getListeTypeBlock().size(); i++) {
-						writer.write(listeNiveau.get(i).getGestionTexture().getListeTypeBlock().get(i));
+					for(int z=0; z<listeNiveau.get(0).getGestionTexture().typeTexture.length; z++) {
+						writer.write(listeNiveau.get(0).getGestionTexture().typeTexture[z]);
 						writer.newLine();
 					}
 					

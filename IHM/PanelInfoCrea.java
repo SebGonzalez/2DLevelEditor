@@ -60,15 +60,15 @@ public PanelInfoCrea() {
 	nombreLigne.setBounds(50, 130, 200, 25);
 	
 	
-	tftaillex = new JTextField("100");
+	tftaillex = new JTextField("5");
 	tftaillex.setBounds(250, 10, 100, 25);
-	tftailley = new JTextField("100");
+	tftailley = new JTextField("2");
 	tftailley.setBounds(250, 40, 100, 25);
 	tfsrc = new JTextField("");
 	tfsrc.setBounds(100, 70, 250, 25);
-	tfnombredec = new JTextField("16");
+	tfnombredec = new JTextField("2");
 	tfnombredec.setBounds(250, 100, 100, 25);
-	tfnombreLigne = new JTextField("12");
+	tfnombreLigne = new JTextField("2");
 	tfnombreLigne.setBounds(250, 130, 100, 25);
 	
 	
@@ -120,10 +120,10 @@ public void actionPerformed(ActionEvent e) {
            int nbdl=Integer.parseInt(tfnombreLigne.getText());
            Niveau n = new Niveau(x,y);
            Frame.p.ajouterNiveau(n);
-           Frame.p.getListeNiveau().get(0).getGestionTexture().setNbColonne(nbdc);
-           Frame.p.getListeNiveau().get(0).getGestionTexture().setNbLigne(nbdl);
-           Frame.p.getListeNiveau().get(0).getGestionTexture().setImage(pathsource);
-           Frame.p.getListeNiveau().get(0).getGestionTexture().decouperImage();
+           Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setNbColonne(nbdc);
+           Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setNbLigne(nbdl);
+           Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setImage("C:/Users/gonzo/Desktop/tilea2.png");
+           Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().decouperImage();
           
            	frame.setSize(400,500);
 			frame.setLocationRelativeTo(null);

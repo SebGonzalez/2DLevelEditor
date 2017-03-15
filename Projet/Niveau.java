@@ -27,6 +27,8 @@ public class Niveau implements Serializable{
 	int width = 800;
 	int height = 450;
 	
+	int id;
+	
 	ArrayList<HashMap<Integer, JLabel>> lignePlateau;
 	
 	private GestionTexture gestionTexture;
@@ -80,8 +82,8 @@ public class Niveau implements Serializable{
 	
 	public Component dessinerPlateauCreation(int width, int height, int hauteur) {
 		
-        int nbCaseX = Frame.p.getListeNiveau().get(0).getNbcasex();
-        int nbCaseY = Frame.p.getListeNiveau().get(0).getNbcasey();
+        int nbCaseX = Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getNbcasex();
+        int nbCaseY = Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getNbcasey();
         
 		JPanel j = new JPanel();
 		j.setLayout(new GridLayout(nbCaseY, nbCaseX));
@@ -117,25 +119,35 @@ public class Niveau implements Serializable{
             public void mouseExited(MouseEvent e) {}
         };
         
-        
-		for(int i=0; i<nbCaseY; i++) {
-			HashMap<Integer, JLabel> ligne = new HashMap();
-			for(int y=0; y<nbCaseX; y++) {
-				LabelCustom p = new LabelCustom(i, y);
-				p.addMouseListener(ml);
-				//p.setBounds(100+ y*(hauteur), 100 + i*( hauteur), hauteur, hauteur);
-				p.setPreferredSize(new Dimension(hauteur, hauteur));
-				p.setBackground(Color.white);
-				//p.setBounds(100+ y*( (width-200-2*hauteur)/nbCaseX), 100 + i*( (height-200)/nbCaseY), ((width-200-2*hauteur)/nbCaseX), ((height-200)/nbCaseY));
-				p.setTransferHandler(new TransferHandler("icon"));
-				p.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-				p.setOpaque(true);
-				p.setVisible(true);
-				j.add(p);
-				ligne.put(y, p);
+        if(lignePlateau.isEmpty()) {
+			for(int i=0; i<nbCaseY; i++) {
+				HashMap<Integer, JLabel> ligne = new HashMap();
+				for(int y=0; y<nbCaseX; y++) {
+					LabelCustom p = new LabelCustom(i, y);
+					p.addMouseListener(ml);
+					//p.setBounds(100+ y*(hauteur), 100 + i*( hauteur), hauteur, hauteur);
+					p.setPreferredSize(new Dimension(hauteur, hauteur));
+					p.setBackground(Color.white);
+					//p.setBounds(100+ y*( (width-200-2*hauteur)/nbCaseX), 100 + i*( (height-200)/nbCaseY), ((width-200-2*hauteur)/nbCaseX), ((height-200)/nbCaseY));
+					p.setTransferHandler(new TransferHandler("icon"));
+					p.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+					p.setOpaque(true);
+					p.setVisible(true);
+					j.add(p);
+					ligne.put(y, p);
+				}
+				Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).ajouterLigne(ligne);
 			}
-			Frame.p.getListeNiveau().get(0).ajouterLigne(ligne);
-		}
+        }
+        else {
+        	for(int i=0; i<nbCaseY; i++) {
+				for(int y=0; y<nbCaseX; y++) {
+					lignePlateau.get(i).get(y).setTransferHandler(new TransferHandler("icon"));
+					lignePlateau.get(i).get(y).addMouseListener(ml);
+					j.add(lignePlateau.get(i).get(y));
+				}
+			}
+        }
 		return j;
 	}
 	

@@ -63,9 +63,7 @@ public class PanelPrincipal extends JPanel implements ActionListener {
 		if(e.getSource() == modifier) {
 			JFileChooser fc = new JFileChooser();
 			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			//fc.addChoosableFileFilter(new FileNameExtensionFilter("Images", "bmp"));
-			//fc.setFileFilter(new FileNameExtensionFilter("Images (bmp, jpg, png)", "bmp", "jpg", "png"));
-			//int returnVal = fc.showOpenDialog(this);
+
 			if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 	    	{	
 				System.out.println(fc.getSelectedFile().getAbsolutePath());
@@ -74,8 +72,6 @@ public class PanelPrincipal extends JPanel implements ActionListener {
 				Object o = Memoire.read(cheminSauvegarde);
 				Frame.p=(Projet)o;
 				Frame.p.listeNiveau.get(0).getGestionTexture().decouperImage();
-				System.out.println("oui : " + Frame.p.getListeNiveau().get(0).getGestionTexture().listeTileTexture.size());
-				//System.out.println("oui : " + Frame.p.getListeNiveau().get(0).getGestionTexture().getImage());
 				
 				Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 	           	frame.setSize((int)dimension.getWidth(), (int)dimension.getHeight());

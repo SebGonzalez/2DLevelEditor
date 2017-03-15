@@ -35,8 +35,6 @@ public class GestionTexture implements Serializable{
 	public GestionTexture() {
 		listeTileTexture = new ArrayList<Image>();
 		listeTypeBlock = new ArrayList<String>();
-		typeTexture = new String[listeTileTexture.size()];
-		
 	}
 	
 	public int getNbLigne() {
@@ -114,6 +112,8 @@ public class GestionTexture implements Serializable{
 				listeTileTexture.add(newImg);
 			}
 		}
+		if(typeTexture == null)
+			typeTexture = new String[listeTileTexture.size()];
 		return img;
 	}
 	

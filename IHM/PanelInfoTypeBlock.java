@@ -86,7 +86,7 @@ public class PanelInfoTypeBlock extends JPanel implements ActionListener {
 		}
 		else if(e.getSource() == valider) {
 			JFrame frame =  (JFrame) this.getTopLevelAncestor();
-			if(Frame.p.getListeNiveau().get(0).getGestionTexture().setListeTypeBlock(listeTextField)) {
+			if(Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setListeTypeBlock(listeTextField)) {
 				Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		        frame.setSize((int)dimension.getWidth(), (int)dimension.getHeight()-40);
 		   		frame.setLocationRelativeTo(null);

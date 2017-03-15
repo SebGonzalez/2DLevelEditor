@@ -1,12 +1,11 @@
 package IHM;
+
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.ComponentEvent;
@@ -20,11 +19,15 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JViewport;
 
-public class PanelCreation extends JPanel implements ActionListener, MouseListener, MouseMotionListener, MenuListener {
+import Projet.Memoire;
+
+public class PanelCreation extends JPanel implements MouseListener, MouseMotionListener {
 	
 	private JMenuBar menuBar = new JMenuBar();
 	private JMenu menuSauvegarder = new JMenu("Sauvegarder");
@@ -36,12 +39,6 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 	private JMenuItem item2 = new JMenuItem("Fermer");
 	private JMenuItem item3 = new JMenuItem("Lancer");
 	private JMenuItem item4 = new JMenuItem("Arrêter");*/
-
-    /*private JCheckBoxMenuItem jcmi1 = new JCheckBoxMenuItem("Choix 1");
-	private JCheckBoxMenuItem jcmi2 = new JCheckBoxMenuItem("Choix 2");
-
-    private JRadioButtonMenuItem jrmi1 = new JRadioButtonMenuItem("Radio 1");
-	private JRadioButtonMenuItem jrmi2 = new JRadioButtonMenuItem("Radio 2");*/
 	
 	int hauteur;
 	boolean oui = false;
@@ -54,6 +51,8 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 	int hauteurFrame;
 	String cheminSauvegarde;
 	int xBarre;
+	
+	private JTabbedPane pane;
 	JScrollPane scrollPane;
 	JScrollPane scrollPaneTexture;
 	boolean cliqueBarre = false;
@@ -61,6 +60,7 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 	JLabel test;
 	
 	private Point lastPosition;
+	int nomniveaux = 0;
 	
 	public PanelCreation() {
 		
@@ -87,26 +87,27 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
   /*---------------------------------------------------Menu-------------------------------------------------------- */	
        	
        	Font font = new Font("serial", Font.PLAIN, 17);
-       	
-       	menuSauvegarder.setFont(font);
-       	menuSauvegarder.setForeground(Color.black);
-       	menuSauvegarder.setBorder(BorderFactory.createEmptyBorder(0, 50, 0,50));
-       	
+          	
        	menuAjoutern.setFont(font);
        	menuAjoutern.setForeground(Color.black);
        	menuAjoutern.setBorder(BorderFactory.createEmptyBorder(0, 50, 0,50));
+       	menuAjoutern.addMouseListener(this);
        	
        	menuSupprimern.setFont(font);
        	menuSupprimern.setForeground(Color.black);
        	menuSupprimern.setBorder(BorderFactory.createEmptyBorder(0, 50, 0,50));
        	
+       	menuSauvegarder.setFont(font);
+       	menuSauvegarder.setForeground(Color.black);
+       	menuSauvegarder.setBorder(BorderFactory.createEmptyBorder(0, 50, 0,50));
+       	menuSauvegarder.addMouseListener(this);
+       	
        	menuExporter.setFont(font);
        	menuExporter.setForeground(Color.black);
-       	menuExporter.setBorder(BorderFactory.createEmptyBorder(0, 50, 0,50));//
-       	//menuExporter.setBorder(BorderFactory.createBevelBorder (0, 1, 0,1, Color.GRAY));
+       	menuExporter.setBorder(BorderFactory.createEmptyBorder(0, 50, 0,50));
+       	menuExporter.addMouseListener(this);
 
        	this.menuBar.add(menuAjoutern);
-       	//this.menuBar.add(new JSeparator(JSeparator.VERTICAL),"growy");
         this.menuBar.add(menuSupprimern);
         this.menuBar.add(menuSauvegarder);
         this.menuBar.add(menuExporter);
@@ -122,10 +123,6 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
        	
        	
   /*---------------------------------------------------Menu---------------------------------------------------------*/     	
-       	/*sauvegarder = new JButton("Enregistrer");
-       	sauvegarder.setBounds(50,50,150,50);
-       	sauvegarder.addActionListener(this);
-		this.add(sauvegarder);*/
 		
 		 hauteur = (this.getHeight() - (2*(this.getHeight()/Frame.p.getListeNiveau().get(0).getGestionTexture().listeTileTexture.size()) ))/Frame.p.getListeNiveau().get(0).getGestionTexture().listeTileTexture.size();
 		 hauteur = this.getHeight()/8 - 34;
@@ -180,39 +177,18 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 		widthTexture = this.getWidth()-(widthCaseNiveau+xCaseNiveau+60)-30;
 		addMouseListener(this);
 		addMouseMotionListener(this);
+		
+		pane=new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+		nomniveaux++;
+		pane.add("Niveau 1", scrollPane);
+		pane.setBounds(xCaseNiveau, yCaseNiveau, widthCaseNiveau, heightCaseNiveau);
+		this.add(pane);
 	}
 
 	public void paintComponent(Graphics g) { 
 		super.paintComponent(g);
 		g.drawLine(xBarre , 0, xBarre, this.getHeight());
     }
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		//KEVIN
-		/*if(e.getSource() == sauvegarder) {
-			JFileChooser fc = new JFileChooser();
-			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			//fc.addChoosableFileFilter(new FileNameExtensionFilter("Images", "bmp"));
-			//fc.setFileFilter(new FileNameExtensionFilter("Images (bmp, jpg, png)", "bmp", "jpg", "png"));
-			//int returnVal = fc.showOpenDialog(this);
-			if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
-	    	{	
-				cheminSauvegarde=fc.getSelectedFile().getAbsolutePath();		
-				Memoire.save(Frame.p, cheminSauvegarde);
-	    	}*/
-		
-		/*if(e.getSource() == sauvegarder) {
-			JFileChooser fc = new JFileChooser();
-			fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
-	    	{	
-				cheminSauvegarde=fc.getSelectedFile().getAbsolutePath();		
-				Frame.p.export(cheminSauvegarde);
-	    	}
-		}	*/
-	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -226,10 +202,69 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if(e.getX() < xBarre+20 && e.getX()> xBarre-20) {
+		 if(e.getSource() == menuAjoutern){
+			JScrollPane scrollpane;
+			nomniveaux++;
+			
+			Frame p = new Frame();
+			p.setContentPane(new PanelInfoCrea());
+			p.setVisible(true);
+			
+			/*Thread t = new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					Frame p = new Frame();
+					p.setContentPane(new PanelInfoCrea());
+					p.setVisible(true);
+					
+				}
+			});
+			t.start();
+			
+			
+			Frame.creation = true;
+			while(Frame.creation) {
+				try {
+					System.out.println("oui");
+					Thread.sleep(1);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}*/
+			scrollpane = new JScrollPane(Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).dessinerPlateauCreation(this.getWidth(), this.getHeight(), hauteur));
+			pane.add("niveau "+nomniveaux ,scrollpane);
+		}
+		 else if(e.getSource() == menuSauvegarder) {
+			JFileChooser fc = new JFileChooser();
+			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+			if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
+	    	{	
+				cheminSauvegarde=fc.getSelectedFile().getAbsolutePath();		
+				Memoire.save(Frame.p, cheminSauvegarde);
+	    	}
+		}
+		else if(e.getSource() == menuExporter) {
+			JFileChooser fc = new JFileChooser();
+			fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
+	    	{	
+				cheminSauvegarde=fc.getSelectedFile().getAbsolutePath();	
+				if(Frame.p.export(cheminSauvegarde)) {
+					JOptionPane.showMessageDialog(null, "Export réussi", "Export", JOptionPane.INFORMATION_MESSAGE);
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Veuillez ne pas laisser de case vide avant d'exporter le projet","Export", JOptionPane.ERROR_MESSAGE);
+				}
+				
+	    	}
+		}
+		else if(e.getX() < xBarre+20 && e.getX()> xBarre-20) {
 			cliqueBarre = true;
 			lastPosition = e.getPoint();
 		}
+
 	}
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
@@ -245,20 +280,22 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 				widthCaseNiveau -= lastPosition.getX()-p.getX();
 				widthTexture += lastPosition.getX()-p.getX();
 				lastPosition = p;
-				scrollPane.setBounds(xCaseNiveau, yCaseNiveau, widthCaseNiveau, heightCaseNiveau);
+				pane.setBounds(xCaseNiveau, yCaseNiveau, widthCaseNiveau, heightCaseNiveau);
 				scrollPaneTexture.setBounds(widthCaseNiveau+xCaseNiveau+60, yCaseNiveau, this.getWidth() - (widthCaseNiveau+xCaseNiveau+60)-30,heightCaseNiveau);
 			}
+			
 			else {
 				xBarre = e.getX();
 				widthCaseNiveau += Math.abs(lastPosition.getX()-p.getX());
 				widthTexture -= Math.abs(lastPosition.getX()-p.getX());
 				lastPosition = p;
-				scrollPane.setBounds(xCaseNiveau, yCaseNiveau, widthCaseNiveau, heightCaseNiveau);
+				pane.setBounds(xCaseNiveau, yCaseNiveau, widthCaseNiveau, heightCaseNiveau);
 				scrollPaneTexture.setBounds(widthCaseNiveau+xCaseNiveau+60, yCaseNiveau, this.getWidth() - (widthCaseNiveau+xCaseNiveau+60)-30,heightCaseNiveau);
 			}
-			repaint();
+			pane.revalidate();
 			scrollPane.revalidate();
 			scrollPaneTexture.revalidate();
+			repaint();
 		}
 		
 		
@@ -273,48 +310,4 @@ public class PanelCreation extends JPanel implements ActionListener, MouseListen
 			setCursor(Cursor.getDefaultCursor());
 		}
 	}
-<<<<<<< HEAD
-=======
-/*--------------------------------------------------------MENU-------------------------------------------------------------------------------------*/
-	@Override
-	public void menuCanceled(MenuEvent e) {
-		System.out.println("cancel");
-		
-	}
-
-	@Override
-	public void menuDeselected(MenuEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("deselcted");
-	}
-
-	@Override
-	public void menuSelected(MenuEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("selected");
-		if(e.getSource() == menuSauvegarder) {
-			JFileChooser fc = new JFileChooser();
-			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			//fc.addChoosableFileFilter(new FileNameExtensionFilter("Images", "bmp"));
-			//fc.setFileFilter(new FileNameExtensionFilter("Images (bmp, jpg, png)", "bmp", "jpg", "png"));
-			//int returnVal = fc.showOpenDialog(this);
-			if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
-	    	{	
-				cheminSauvegarde=fc.getSelectedFile().getAbsolutePath();		
-				Memoire.save(Frame.p, cheminSauvegarde);
-	    	}
-		}
-		
-		if(e.getSource() == menuExporter) {
-			JFileChooser fc = new JFileChooser();
-			fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
-	    	{	
-				cheminSauvegarde=fc.getSelectedFile().getAbsolutePath();		
-				Frame.p.export(cheminSauvegarde);
-	    	}
-		}
-	}
-/*--------------------------------------------------------MENU-------------------------------------------------------------------------------------*/
->>>>>>> 23bdf3965983c8267c7c804c19f88ee5f95af791
 }

@@ -9,6 +9,7 @@ import Projet.Projet;
 public class Frame extends JFrame {
 
 	public static Projet p;
+	public static boolean creation;
 	
 	/*private JMenuBar menuBar = new JMenuBar();
 	private JMenu menu1 = new JMenu("Fichier");
@@ -25,14 +26,16 @@ public class Frame extends JFrame {
 		this.setContentPane(new PanelPrincipal());
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setTitle("2D Level Editor");
 		this.setVisible(true);
-		
 	}
 	
 	 public static void setBestLookAndFeelAvailable(){
 		 
 		       try {
 		           UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+		           //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+
 		       }catch (Exception e) {}
 		 
 		   //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
