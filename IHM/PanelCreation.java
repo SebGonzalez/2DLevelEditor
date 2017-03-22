@@ -216,7 +216,7 @@ public class PanelCreation extends JPanel implements MouseListener, MouseMotionL
 		
 		if(Frame.p.getListeNiveau().size() > 1) {
 			for(int i=1; i<Frame.p.getListeNiveau().size(); i++) {
-
+				nomniveaux++;
 				JScrollPane scrollpaneAjout = new JScrollPane(Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).dessinerPlateauCreation(this.getWidth(), this.getHeight(), hauteur));
 				pane.add("Niveau "+nomniveaux ,scrollpaneAjout);
 				
@@ -290,10 +290,12 @@ public class PanelCreation extends JPanel implements MouseListener, MouseMotionL
 	    	}
 		}
 		else if(e.getSource() == menuVisualiser) {
-			Frame f = new Frame();
+			JFrame f = new JFrame();
 			f.setSize(this.getWidth(),this.getHeight());
 			f.setLocationRelativeTo(null);
 	        f.setContentPane(new PanelAffichageRendu(pane.getSelectedIndex()));
+	        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	        f.setVisible(true);
 		}
 		else if(e.getX() < xBarre+20 && e.getX()> xBarre-20) {
 			cliqueBarre = true;
