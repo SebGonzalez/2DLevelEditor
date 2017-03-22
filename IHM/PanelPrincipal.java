@@ -34,7 +34,6 @@ public class PanelPrincipal extends JPanel implements ActionListener {
 	
 	public PanelPrincipal() {
 		this.setLayout(null);
-		
 		try {
 			img = ImageIO.read(new FileInputStream("/image/site.jpg"));
 		} catch (FileNotFoundException e) {
@@ -69,8 +68,6 @@ public class PanelPrincipal extends JPanel implements ActionListener {
 public void paintComponent(Graphics g){
 	super.paintComponent(g);
 	g.drawImage(img,0, 0, this.getWidth(),this.getHeight(),null);
-	System.out.println(this.getHeight());
-	System.out.println(this.getWidth());
 
 }
 	@Override

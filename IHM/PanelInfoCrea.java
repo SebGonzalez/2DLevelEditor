@@ -129,7 +129,7 @@ public void actionPerformed(ActionEvent e) {
 			Frame.p.ajouterNiveau(n);
 			Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setNbColonne(nbdc);
 			Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setNbLigne(nbdl);
-			Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setImage("C:/Users/gonzo/Desktop/tilea2.png");
+			Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setImage(pathsource);
 			Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().decouperImage();
           
 			frame.setSize(400,500);
@@ -154,7 +154,7 @@ public void actionPerformed(ActionEvent e) {
 			Frame.p.ajouterNiveau(n);
 			Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setNbColonne(nbdc);
 			Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setNbLigne(nbdl);
-			Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setImage("C:/Users/gonzo/Desktop/tilea2.png");
+			Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setImage(pathsource);
 			Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().decouperImage();
           
 			dialog.setSize(400,500);
