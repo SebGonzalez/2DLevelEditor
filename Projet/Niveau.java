@@ -16,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.TransferHandler;
 
+import dragAndDrop.MouseGlassListener;
+import dragAndDrop.MouseGlassMotionListener;
 import IHM.Frame;
 
 public class Niveau implements Serializable{
@@ -124,7 +126,9 @@ public class Niveau implements Serializable{
 				HashMap<Integer, JLabel> ligne = new HashMap();
 				for(int y=0; y<nbCaseX; y++) {
 					LabelCustom p = new LabelCustom(i, y);
-					p.addMouseListener(ml);
+					p.addMouseListener(new MouseGlassListener(Frame.glass));
+				    p.addMouseMotionListener(new MouseGlassMotionListener(Frame.glass));
+					//p.addMouseListener(ml);
 					//p.setBounds(100+ y*(hauteur), 100 + i*( hauteur), hauteur, hauteur);
 					p.setPreferredSize(new Dimension(hauteur, hauteur));
 					p.setBackground(Color.white);
@@ -142,6 +146,7 @@ public class Niveau implements Serializable{
         else {
         	for(int i=0; i<nbCaseY; i++) {
 				for(int y=0; y<nbCaseX; y++) {
+					System.out.println(""+i + " " + y);
 					lignePlateau.get(i).get(y).setTransferHandler(new TransferHandler("icon"));
 					lignePlateau.get(i).get(y).addMouseListener(ml);
 					j.add(lignePlateau.get(i).get(y));

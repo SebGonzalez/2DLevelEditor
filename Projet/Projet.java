@@ -43,7 +43,7 @@ public class Projet implements Serializable{
 			for(int i=0; i<listeNiveau.size(); i++) {
 	
 				try {
-					File imagesrc = new File(listeNiveau.get(0).getGestionTexture().getImage());
+					File imagesrc = new File(listeNiveau.get(i).getGestionTexture().getImage());
 					File imagedest = new File(chemin + "/" + imagesrc.getName());
 					System.out.println(imagesrc.getName());
 					copyFile(imagesrc,imagedest);

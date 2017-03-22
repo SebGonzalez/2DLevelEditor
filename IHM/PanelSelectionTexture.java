@@ -45,7 +45,7 @@ public class PanelSelectionTexture extends JPanel implements KeyListener{
 		
 		this.setLayout(null);
 		Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-       	this.setSize((int)dimension.getWidth(), (int)dimension.getHeight());;
+       	this.setSize((int)dimension.getWidth(), (int)dimension.getHeight());
        	
        	typeBlock = Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().listeTypeBlock.get(0);
        	JLabel labelSelection = new JLabel("Sélectionner toute les texture de type : " + typeBlock + " (cliquer sur valider ensuite)");

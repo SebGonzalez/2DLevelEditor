@@ -208,6 +208,17 @@ public class PanelCreation extends JPanel implements MouseListener, MouseMotionL
 			}
 		});
 		this.add(paneTexture);
+		
+		if(Frame.p.getListeNiveau().size() > 1) {
+			for(int i=1; i<Frame.p.getListeNiveau().size(); i++) {
+
+				JScrollPane scrollpaneAjout = new JScrollPane(Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).dessinerPlateauCreation(this.getWidth(), this.getHeight(), hauteur));
+				pane.add("Niveau "+nomniveaux ,scrollpaneAjout);
+				
+				JScrollPane scrollPaneTextureAjout=new JScrollPane(Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().dessinerTile(this.getWidth(), this.getHeight())); 
+				paneTexture.add("Niveau " + nomniveaux, scrollPaneTextureAjout);
+			}
+		}
 	}
 
 	public void paintComponent(Graphics g) { 

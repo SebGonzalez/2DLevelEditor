@@ -71,7 +71,9 @@ public class PanelPrincipal extends JPanel implements ActionListener {
 				
 				Object o = Memoire.read(cheminSauvegarde);
 				Frame.p=(Projet)o;
-				Frame.p.listeNiveau.get(0).getGestionTexture().decouperImage();
+				for(int i=0; i<Frame.p.listeNiveau.size(); i++) {
+					Frame.p.listeNiveau.get(i).getGestionTexture().decouperImage();
+				}
 				
 				Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 	           	frame.setSize((int)dimension.getWidth(), (int)dimension.getHeight());
@@ -80,7 +82,6 @@ public class PanelPrincipal extends JPanel implements ActionListener {
 	   			frame.setContentPane(new PanelCreation());
 	   			frame.repaint();
 	   			frame.validate();
-				
 	    	}
 			
 		}
