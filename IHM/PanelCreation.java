@@ -28,7 +28,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JViewport;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.xml.ws.handler.MessageContext.Scope;
 
 import Projet.Memoire;
 
@@ -39,6 +38,7 @@ public class PanelCreation extends JPanel implements MouseListener, MouseMotionL
 	private JMenu menuAjoutern = new JMenu("Ajouter niveau");
 	private JMenu menuSupprimern = new JMenu("Supprimer niveau");
 	private JMenu menuExporter = new JMenu("Exporter");
+	private JMenu menuVisualiser = new JMenu("Visualiser");
 
 	/*private JMenuItem item1 = new JMenuItem("Ouvrir");
 	private JMenuItem item2 = new JMenuItem("Fermer");
@@ -112,12 +112,17 @@ public class PanelCreation extends JPanel implements MouseListener, MouseMotionL
        	menuExporter.setForeground(Color.black);
        	menuExporter.setBorder(BorderFactory.createEmptyBorder(0, 50, 0,50));
        	menuExporter.addMouseListener(this);
+       	
+       	menuVisualiser.setFont(font);
+       	menuVisualiser.setForeground(Color.black);
+       	menuVisualiser.setBorder(BorderFactory.createEmptyBorder(0, 50, 0,50));
+       	menuVisualiser.addMouseListener(this);
 
        	this.menuBar.add(menuAjoutern);
         this.menuBar.add(menuSupprimern);
         this.menuBar.add(menuSauvegarder);
         this.menuBar.add(menuExporter);
-        
+        this.menuBar.add(menuVisualiser);
         
         menuBar.setBounds(0,0,this.getWidth(),30);
        // menuBar.setBackground(Color.BLUE);
@@ -283,6 +288,12 @@ public class PanelCreation extends JPanel implements MouseListener, MouseMotionL
 				}
 				
 	    	}
+		}
+		else if(e.getSource() == menuVisualiser) {
+			Frame f = new Frame();
+			f.setSize(this.getWidth(),this.getHeight());
+			f.setLocationRelativeTo(null);
+	        f.setContentPane(new PanelAffichageRendu(pane.getSelectedIndex()));
 		}
 		else if(e.getX() < xBarre+20 && e.getX()> xBarre-20) {
 			cliqueBarre = true;

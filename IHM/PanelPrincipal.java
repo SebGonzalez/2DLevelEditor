@@ -1,19 +1,26 @@
 package IHM;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-
-import Projet.*;
-
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import Projet.Memoire;
+import Projet.Projet;
 
 
 
@@ -22,15 +29,25 @@ public class PanelPrincipal extends JPanel implements ActionListener {
 	private JLabel titre;
 	private JButton creer;
 	private JButton modifier;
+	private Image img ;
 	
 	
 	public PanelPrincipal() {
 		this.setLayout(null);
-		
+		try {
+			img = ImageIO.read(new FileInputStream("/image/site.jpg"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Font f = new Font("Arial",Font.BOLD, 25);
 		
 		titre = new JLabel("Level Editor");
 		titre.setFont(f);
+		titre.setForeground( Color.white);
 		titre.setHorizontalAlignment(JLabel.CENTER);
 		titre.setBounds(0, 10, 500, 50);
 		this.add(titre);
@@ -44,8 +61,15 @@ public class PanelPrincipal extends JPanel implements ActionListener {
 		modifier.setBounds(250, 80, 190, 50);
 		modifier.addActionListener(this);
 		this.add(modifier);
+		
 	}
 
+	
+public void paintComponent(Graphics g){
+	super.paintComponent(g);
+	g.drawImage(img,0, 0, this.getWidth(),this.getHeight(),null);
+
+}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JFrame frame =  (JFrame) this.getTopLevelAncestor();

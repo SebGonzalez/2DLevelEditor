@@ -129,7 +129,6 @@ public void actionPerformed(ActionEvent e) {
 			Frame.p.ajouterNiveau(n);
 			Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setNbColonne(nbdc);
 			Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setNbLigne(nbdl);
-			System.out.println(pathsource);
 			Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().setImage(pathsource);
 			Frame.p.getListeNiveau().get(Frame.p.getListeNiveau().size()-1).getGestionTexture().decouperImage();
           
